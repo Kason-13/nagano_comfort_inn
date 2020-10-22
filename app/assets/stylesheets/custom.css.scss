@@ -1,0 +1,19 @@
+/* general styling to make it less basic*/
+h1{
+  font-family: -apple-system
+}
+
+/*jumbotron*/
+.jumbotron{
+  text-align: center;
+}
+
+/*footer*/
+
+footer{
+  display: flex;
+  ul{
+    display: flex;
+    list-style: none;
+  }
+}

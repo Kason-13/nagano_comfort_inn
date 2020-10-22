@@ -5,12 +5,20 @@ gem 'rails', '3.2.16'
 #for use of haml instead of html
 gem 'haml'
 
+#newer versions of rake removed last_comment method whioch rspec-core uses
+gem 'rake', '< 11.0'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '2.11.0'
+  gem 'factory_girl_rails', '4.1.0'
+end
+
+group :development do
+  gem 'annotate', '2.5.0'
 end
 
 
@@ -27,7 +35,7 @@ group :test do
   gem 'capybara', '1.1.2'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '2.0.2'
 
 
 # To use ActiveModel has_secure_password

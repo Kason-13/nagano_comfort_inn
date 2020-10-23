@@ -1,3 +1,12 @@
+/*mixins */
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
 /* general styling to make it less basic*/
 h1{
   font-family: -apple-system
@@ -16,4 +25,26 @@ footer{
     display: flex;
     list-style: none;
   }
+}
+
+
+/* forms */
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* forms errors*/
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group !optional;
+  @extend .error !optional;
 }

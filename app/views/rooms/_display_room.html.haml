@@ -1,0 +1,9 @@
+.formatted_room
+  %li
+    %h6
+      =room.room_num
+    %h6
+      insert image here ... when it's gonna be avaiable (placeholder for image)
+    %h6
+      =link_to 'view availability', '#' #links to the availability of the room
+    %h6 #{format_room_price(room.price)}$/night

@@ -8,17 +8,24 @@ gem 'haml'
 #newer versions of rake removed last_comment method whioch rspec-core uses
 gem 'rake', '< 11.0'
 
+#for pagination
+gem 'will_paginate', '3.0.3'
+gem 'bootstrap-will_paginate', '0.0.6'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
+  gem 'launchy'
   gem 'rspec-rails', '2.11.0'
   gem 'factory_girl_rails', '4.1.0'
 end
 
 group :development do
   gem 'annotate', '2.5.0'
+  #pry debugger
+  gem 'pry-debugger'
 end
 
 

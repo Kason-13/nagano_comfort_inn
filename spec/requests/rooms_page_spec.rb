@@ -10,15 +10,16 @@ describe "room pages" do
     #after a little while, i pinned it down on the fact that FactoryGirl is not creating
     #anything with an id, therefor our route becomes /users/ instead of /users/5 (5 being the id)
 
-    # let(:room) { FactoryGirl.create(:room) }
-    #
-    # describe "should display the correct informations" do
-    #   before do
-    #     visit rooms_path(room)
-    #   end
-    #   it { should have_selector('title', text: "Nagano Comfort Inn | 5" ) }
-    #   it { should have_selector('h5', text: "The room is currently available" ) }
-    # end
+    let(:test_room) { FactoryGirl.create(:room) }
+    #room --> room_num:5,status:true
+
+    describe "should display the correct informations" do
+      before do
+        visit room_path(test_room)
+      end
+      it { should have_selector('title', text: " | Room 5" ) }
+      it { should have_selector('h5', text: "available" ) }
+    end
 
   end
 

@@ -5,6 +5,7 @@ class RoomsController < ApplicationController
   end
 
   def index
+    @rooms = Room.paginate(page: params[:page])
   end
 
   def edit
@@ -14,7 +15,12 @@ class RoomsController < ApplicationController
   end
 
   def create
-
+    @room = Room.new(params[:room])
+    if(@room.save)
+      redirect_to @room
+    else
+      render 'new'
+    end
   end
 
   def new

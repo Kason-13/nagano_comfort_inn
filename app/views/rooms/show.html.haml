@@ -1,2 +1,4 @@
 =provide(:title, 'Room '+@room.room_num.to_s)
-%h5= display_availability(@room.status)
+%h5  Room number #{@room.room_num}  #{display_availability(@room.status)}
+%h5 #{format_room_price(@room.price)}$/night
+.btn.btn-large.btn-primary View availability of this room

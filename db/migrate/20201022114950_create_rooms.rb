@@ -3,6 +3,7 @@ class CreateRooms < ActiveRecord::Migration
     create_table :rooms do |t|
       t.integer :room_num
       t.boolean :status
+      t.decimal :price
 
       t.timestamps
     end

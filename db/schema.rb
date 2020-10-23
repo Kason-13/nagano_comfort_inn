@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201022163740) do
+ActiveRecord::Schema.define(:version => 20201022225426) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20201022163740) do
 
   create_table "room_types", :force => true do |t|
     t.string   "room"
-    t.decimal  "price"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -35,13 +34,15 @@ ActiveRecord::Schema.define(:version => 20201022163740) do
   create_table "rooms", :force => true do |t|
     t.integer  "room_num"
     t.boolean  "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.decimal  "price"
+    t.integer  "room_type_id"
+    t.integer  "view_type_id"
   end
 
   create_table "view_types", :force => true do |t|
     t.string   "view"
-    t.decimal  "price"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

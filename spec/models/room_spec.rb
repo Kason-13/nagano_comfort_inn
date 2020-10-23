@@ -2,11 +2,14 @@
 #
 # Table name: rooms
 #
-#  id         :integer          not null, primary key
-#  room_num   :integer
-#  status     :boolean
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :integer          not null, primary key
+#  room_num     :integer
+#  status       :boolean
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  price        :decimal(, )
+#  room_type_id :integer
+#  view_type_id :integer
 #
 
 require 'spec_helper'

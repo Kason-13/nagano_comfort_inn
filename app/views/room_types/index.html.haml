@@ -1,0 +1,10 @@
+=provide(:title, 'All room types')
+%h5 List of all room types created
+
+= will_paginate
+
+%ul
+  - @room_types.each do |type|
+    =render 'shared/types', type: type
+
+= will_paginate

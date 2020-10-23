@@ -3,6 +3,5 @@
 FactoryGirl.define do
   factory :view_type do
     view "MyString"
-    price "9.99"
   end
 end

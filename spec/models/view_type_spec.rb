@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: view_types
+#
+#  id         :integer          not null, primary key
+#  view       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+
+
 require 'spec_helper'
 
 describe ViewType do
@@ -6,10 +18,6 @@ describe ViewType do
   describe "verifying validates criteria" do
     describe "when view type string is empty" do
       before { view_type.view = ' ' }
-      it { should_not be_valid }
-    end
-    describe "when view price is null" do
-      before { view_type.price = nil}
       it { should_not be_valid }
     end
   end

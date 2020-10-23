@@ -1,2 +1,4 @@
-Check in date: #{ f.date_select :checkin_date }
-Check out date: #{ f.date_select :checkout_date }
+%label(for="checkin_date") check-in date:
+%input#checkin(name="checkin_date" type="date")
+%label(for="checkout_date") check-out date:
+%input#checkout(name="checkout_date" type="date")

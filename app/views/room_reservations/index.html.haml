@@ -1,0 +1,10 @@
+=provide(:title, 'All reservations')
+%h5 all reservations page
+
+- will_paginate
+
+%ul
+  -@reservations.each do |reservation|
+    =render 'display_reservation' , reservation:reservation
+
+- will_paginate

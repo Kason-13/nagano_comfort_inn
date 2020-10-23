@@ -9,5 +9,5 @@
     %h6
       insert image here ... when it's gonna be available (placeholder for image)
     %h6
-      =link_to 'view availability', room_path(room)
+      =link_to 'Make a reservation!', '/room_reservation/new/'+room.id.to_s
     %h6 #{format_room_price(room.price)}$/night

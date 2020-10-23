@@ -1,6 +1,6 @@
 .row
   %section
-    =form_for(@room) do |f|
-      .row
-        =render '/reservation_dates/datepickers', f:f
-        =f.submit "search!", class:"btn btn-large btn-success"
+    =form_tag('/search', :method =>"get") do
+      .datepicker-group
+        =render '/reservation_dates/datepickers'
+        %input(type="submit" value="Search!")

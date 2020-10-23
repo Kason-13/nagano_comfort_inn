@@ -2,8 +2,14 @@ NaganoComfortInn::Application.routes.draw do
 
   resources :rooms
 
+  get '/room_reservation/new/:id' => 'room_reservations#new'
+  post '/room_reservation/new/:id' => 'room_reservations#create'
+  get '/room_reservations' => 'room_reservations#index'
+
   resources :room_types, only: [:index,:new,:create,:destroy]
   resources :view_types, only: [:index,:new,:create,:destroy]
+
+  get '/search' => 'rooms#search'
 
   get "static_pages/home"
   get "static_pages/help"

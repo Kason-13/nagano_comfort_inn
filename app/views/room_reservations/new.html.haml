@@ -1,0 +1,10 @@
+=provide(:title,'New reservation')
+.form-group
+  %h5 summary of room:
+  =render 'room_summary'
+  .row
+    .section.mx-auto
+      =form_tag('/room_reservation/new/'+@room_id, :method => "post") do
+        =render 'fields'
+        =render '/reservation_dates/datepickers'
+        %input(type="submit" value="reservate!")

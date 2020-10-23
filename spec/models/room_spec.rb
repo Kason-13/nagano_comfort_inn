@@ -16,7 +16,7 @@ require 'spec_helper'
 
 describe Room do
   before do
-    @room = Room.new(room_num: 1, status: true)
+    @room = Room.new(room_num: 1, status: true, price: 1.99,room_type_id:1,view_type_id:1)
     @room.save!
   end
 
@@ -27,14 +27,31 @@ describe Room do
 
   it {should be_valid}
 
-  describe "when room_num is empty" do
-    before { @room.room_num = nil }
-    it { should_not be_valid }
-  end
+  describe "when fields are empty" do
+    describe "when room_num is empty" do
+      before { @room.room_num = nil }
+      it { should_not be_valid }
+    end
 
-  describe "when status is empty" do
-    before { @room.status = nil }
-    it { should_not be_valid }
+    describe "when status is empty" do
+      before { @room.status = nil }
+      it { should_not be_valid }
+    end
+
+    describe "when price is empty" do
+      before { @room.price = nil }
+      it { should_not be_valid }
+    end
+
+    describe "when room_type_id is empty" do
+      before { @room.room_type_id = nil }
+      it { should_not be_valid }
+    end
+
+    describe "when view_type_id is empty" do
+      before { @room.view_type_id = nil }
+      it { should_not be_valid }
+    end
   end
 
 end

@@ -1,10 +1,12 @@
 =provide(:title, 'All room types')
 %h5 List of all room types created
 
+=link_to 'Create a new room type', new_room_type_path, class: "btn btn-small btn-success"
+
 = will_paginate
 
 %ul
-  - @room_types.each do |type|
-    =render 'shared/types', type: type
+  - @room_types.each do |room_type|
+    =render 'shared/types', name: room_type.room, price: room_type.price
 
 = will_paginate

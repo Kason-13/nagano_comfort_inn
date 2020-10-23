@@ -1,0 +1,12 @@
+=provide('title','All view types')
+
+%h5 List of all the view types created
+
+=link_to 'Create a new view type', new_view_type_path, class: "btn btn-small btn-success"
+
+=will_paginate
+%ul
+  -@view_types.each do |view_type|
+    =render 'shared/types',  name: view_type.view, price: view_type.price
+
+=will_paginate

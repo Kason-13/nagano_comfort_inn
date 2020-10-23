@@ -4,6 +4,8 @@ FactoryGirl.define do
     room_num 5
     status true
     price 500.25
+    view_type_id 1
+    room_type_id 1
   end
 
   factory :client do

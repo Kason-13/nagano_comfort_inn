@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201022225426) do
+ActiveRecord::Schema.define(:version => 20201023070818) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -23,10 +23,21 @@ ActiveRecord::Schema.define(:version => 20201022225426) do
 
   add_index "clients", ["email"], :name => "index_clients_on_email", :unique => true
 
+  create_table "reservation_dates", :force => true do |t|
+    t.date     "date"
+    t.boolean  "weekend"
+    t.integer  "different_price"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "reservation_dates", ["date"], :name => "index_reservation_dates_on_date", :unique => true
+
   create_table "room_types", :force => true do |t|
     t.string   "room"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.decimal  "price"
   end
 
   add_index "room_types", ["room"], :name => "index_room_types_on_room", :unique => true
@@ -45,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20201022225426) do
     t.string   "view"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.decimal  "price"
   end
 
   add_index "view_types", ["view"], :name => "index_view_types_on_view", :unique => true

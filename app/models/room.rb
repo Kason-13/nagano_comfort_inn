@@ -14,7 +14,7 @@
 
 
 class Room < ActiveRecord::Base
-  attr_accessible :room_num, :status, :price
+  attr_accessible :room_num, :status, :price, :room_type_id, :view_type_id
 
   has_one :room_type
   has_one :view_type
@@ -22,6 +22,7 @@ class Room < ActiveRecord::Base
   # to make verify those criteria upon saves/updates
   validates(:room_num, presence:true)
   validates(:status, presence:true)
-  #validates(:room_type_id, presence:true) for now since not implemented yet
-  #validates(:view_type_id,presence:true) for now since not implemented yet
+  validates(:price,presence:true)
+  validates(:room_type_id, presence:true)
+  validates(:view_type_id,presence:true)
 end

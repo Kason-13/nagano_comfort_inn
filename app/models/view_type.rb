@@ -11,7 +11,8 @@
 
 
 class ViewType < ActiveRecord::Base
-  attr_accessible :price, :view
+  attr_accessible :view, :price
 
   validates(:view, presence:true)
+  validates(:price, presence:true)
 end

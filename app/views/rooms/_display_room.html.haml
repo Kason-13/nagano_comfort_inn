@@ -1,9 +1,13 @@
 .formatted_room
   %li
     %h6
-      =room.room_num
+      Room ##{room.room_num}
     %h6
-      insert image here ... when it's gonna be avaiable (placeholder for image)
+      Room type: #{room_types_hashmap[room.room_type_id]}
     %h6
-      =link_to 'view availability', '#' #links to the availability of the room
+      Outside view: #{view_types_hashmap[room.view_type_id]}
+    %h6
+      insert image here ... when it's gonna be available (placeholder for image)
+    %h6
+      =link_to 'view availability', room_path(room)
     %h6 #{format_room_price(room.price)}$/night

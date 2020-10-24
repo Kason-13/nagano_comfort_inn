@@ -1,7 +1,5 @@
 require 'pry'
 class RoomReservationsController < ApplicationController
-  def show
-  end
 
   def index
     @reservations = RoomReservation.paginate(page: params[:page], per_page:20)
@@ -15,8 +13,14 @@ class RoomReservationsController < ApplicationController
   end
 
   def create
+    if(params[:checkin_date].empty? || params[:checkout_date].empty?)
+      #room_reservation_url(params[:id])
+      #currently not functioning properly, idk why
+    end
+
     checkin_date = Date.parse(params[:checkin_date])
     checkout_date = Date.parse(params[:checkout_date])
+
 
     client = create_or_find_client(params[:form_email],params[:form_name])
 
@@ -29,18 +33,20 @@ class RoomReservationsController < ApplicationController
     redirect_to rooms_path # for now, need to make a resume of their reservation
   end
 
-  def destroy
-  end
-
-  def edit
-  end
-
   private
+
+    def room_reservation_url(room_id)
+      '/room_reservation/new/'+room_id.to_s
+    end
+
     # method to find existing client in the DB if it exists. will create it if not
     def create_or_find_client(email,name)
+      email.downcase!
       if Client.where(:email => email).blank?
         new_client = Client.new(name: name, email: email)
-        new_client.save!
+        if(!new_client.save!)
+          render 'new'
+        end
       end
       Client.where(:email => email).first
     end
@@ -55,11 +61,15 @@ class RoomReservationsController < ApplicationController
     def make_reservation(day,reservation_id,room_id)
       if ReservationDate.where(:date => day).blank?
         new_reservation_date = ReservationDate.new(date:day)
-        new_reservation_date.save!
+        if(!new_reservation_date.save!)
+          render 'new'
+        end
       end
       found_date = ReservationDate.where(:date => day).first
-      new_room_reservation = RoomReservation.new(date_id:found_date.id , room_id: room_id, reservation_id: reservation_id )
-      new_room_reservation.save!
+      new_room_reservation = RoomReservation.new(reservation_date_id:found_date.id , room_id: room_id, reservation_id: reservation_id )
+      if(!new_room_reservation.save!)
+        render 'new'
+      end
     end
 
 end

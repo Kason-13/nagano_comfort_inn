@@ -6,6 +6,6 @@ class RoomReservation < ActiveRecord::Base
   belongs_to :room
 
   validates(:reservation_id,presence:true)
-  validates(:date_id,presence:true)
+  validates(:reservation_date_id,presence:true)
   validates(:room_id,presence:true)
 end

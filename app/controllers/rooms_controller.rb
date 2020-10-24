@@ -4,12 +4,17 @@ class RoomsController < ApplicationController
   def search
     @checkin_date = params[:checkin_date]
     @checkout_date = params[:checkout_date]
+    view_type_id = params[:view_type_selected]
+    room_type_id = params[:room_type_selected]
 
 
     rooms_unavailable_ids = retrieve_unavailable_room_ids(@checkin_date,@checkout_date)
 
     #retrieve rooms that are available and paginate
-    @rooms = Room.where("id NOT IN (?)",rooms_unavailable_ids).paginate(page: params[:page], per_page:5)
+    @rooms = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
+                        rooms_unavailable_ids,room_type_id,view_type_id)
+                        .paginate(page: params[:page], per_page:5)
+
     @room_types_hashmap = hashmap_of_view_room_type_ls(create_roomType_list)
     @view_types_hashmap = hashmap_of_view_room_type_ls(create_viewType_list)
   end
@@ -59,7 +64,7 @@ class RoomsController < ApplicationController
       dates_booked_ids = extract_ids(dates_booked)
 
       # fetch the rooms that are gonna be unavailable using the dates_booked
-      rooms_unavailable = Room.joins(:room_reservations).where("date_id IN (?)",dates_booked_ids)
+      rooms_unavailable = Room.joins(:room_reservations).where("reservation_date_id IN (?)",dates_booked_ids)
       extract_ids(rooms_unavailable)
     end
 

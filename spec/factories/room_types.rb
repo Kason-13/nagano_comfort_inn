@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :room_type do
-    room "MyString"
+    room "single bed"
     price 25.99
   end
 end

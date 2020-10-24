@@ -11,7 +11,6 @@ FactoryGirl.define do
   factory :client do
     name "arthax leGrand"
     email "arthax@gmail.com"
-    age 35
   end
 
 end

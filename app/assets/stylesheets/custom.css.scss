@@ -8,13 +8,17 @@
 
 
 /* general styling to make it less basic*/
-h1{
+*{
   font-family: -apple-system
 }
 
 /*jumbotron*/
 .jumbotron{
   text-align: center;
+  background-image: url('https://radissonhotels.iceportal.com/image/country-inn-suites-by-radisson-erie-pa/exteriorview/16256-116591-f65039627_3xl.jpg');
+  background-size:cover ;
+  background-position: center;
+  color:#3295ae;
 }
 
 /*footer*/

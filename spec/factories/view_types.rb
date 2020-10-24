@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :view_type do
-    view "MyString"
+    view "ocean"
     price 26.99
   end
 end

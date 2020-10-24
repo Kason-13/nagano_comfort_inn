@@ -13,6 +13,8 @@
 class Client < ActiveRecord::Base
   attr_accessible :age, :email, :name
 
+  has_many :reservations, foreign_key: "client_id"
+
   before_save { email.downcase! }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

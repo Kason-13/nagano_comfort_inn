@@ -4,13 +4,16 @@ class RoomReservationsController < ApplicationController
   end
 
   def index
-    @reservations = RoomReservation.find(:all,:joins=>"
-                                                      JOIN reservation_dates ON reservation_dates.id = room_reservations.date_id
-                                                      JOIN rooms ON rooms.id = room_reservations.room_id
-                                                      JOIN reservations ON reservations.id = room_reservations.reservation_id
-                                                      JOIN clients ON client.id = reservation.client_id")
+    # reservations = RoomReservation.find(:all,:joins=>"
+    #                                                   JOIN reservation_dates ON reservation_dates.id = room_reservations.date_id
+    #                                                   JOIN rooms ON rooms.id = room_reservations.room_id
+    #                                                   JOIN reservations ON reservations.id = room_reservations.reservation_id
+    #                                                   JOIN clients ON clients.id = reservations.client_id")
+
+
     # ehhhh .... probably better to join the tables together
     #  at this point, I'll do this later when I can
+    binding.pry
     dates_hash = {}
     ReservationDate.all.each do |date|
       dates_hash[date.id] = date.date
@@ -50,7 +53,7 @@ class RoomReservationsController < ApplicationController
     reservation = create_reservation_id(client.id)
 
     (checkin_date..checkout_date).each do |day|
-      make_reservation(day,reservation.id,params[:id])
+      make_reservation(day, reservation.id, params[:id])
     end
 
     redirect_to rooms_path # for now, need to make a resume of their reservation

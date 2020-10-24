@@ -11,6 +11,11 @@ class StaticPagesController < ApplicationController
     redirect_to_home
   end
 
+  def exit_admin
+    logoff_admin
+    redirect_to_home
+  end
+
   def help
   end
 

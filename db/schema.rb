@@ -11,17 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201024042314) do
+ActiveRecord::Schema.define(:version => 20201024152627) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.integer  "age"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "password_digest"
+    t.string   "remember_token"
   end
 
   add_index "clients", ["email"], :name => "index_clients_on_email", :unique => true
+  add_index "clients", ["remember_token"], :name => "index_clients_on_remember_token"
 
   create_table "reservation_dates", :force => true do |t|
     t.date     "date"
@@ -37,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20201024042314) do
     t.integer  "client_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "demands"
   end
 
   add_index "reservations", ["client_id"], :name => "index_reservations_on_client_id"

@@ -18,4 +18,5 @@ NaganoComfortInn::Application.routes.draw do
 
   match '/help', to: 'static_pages#help'
   match '/admin', to: 'static_pages#admin'
+  match '/logoff_admin', to: 'static_pages#exit_admin'
 end

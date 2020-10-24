@@ -33,6 +33,11 @@ describe "session" do
       it { should have_selector('a', text: "View all reservations") }
       it { should_not have_selector('a', text: "Admin mode") }
     end
+    describe "when logging off from admin mode" do
+      before { visit logoff_admin_path }
+      it { should_not have_selector('a', text: "View all reservations") }
+      it { should have_selector('a', text: "Admin mode") }
+    end
   end
 
 end

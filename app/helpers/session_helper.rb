@@ -5,6 +5,10 @@ module SessionHelper
     session[:admin] = true
   end
 
+  def logoff_admin
+    session[:admin] = nil
+  end
+
   def is_admin?
     !session[:admin].nil?
   end

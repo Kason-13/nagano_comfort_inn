@@ -8,6 +8,9 @@ gem 'haml'
 #newer versions of rake removed last_comment method whioch rspec-core uses
 gem 'rake', '< 11.0'
 
+#for secured password
+gem 'bcrypt-ruby', '3.0.1'
+
 #for pagination
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'

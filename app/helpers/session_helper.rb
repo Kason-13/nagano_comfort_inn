@@ -2,8 +2,13 @@ require 'pry'
 module SessionHelper
 
   def sign_in(client)
-    cookie.permanent[:remember_token] = user.remember_token
+    cookies.permanent[:remember_token] = client.remember_token
     self.current_client = client
+  end
+
+  def sign_out
+    self.current_client = nil
+    cookies.delete(:remember_token)
   end
 
   def current_client=(client)
@@ -54,8 +59,8 @@ module SessionHelper
   end
 
   def redirect_back_or(route)
-    redirect_to(session[:return_to] || default)
-    session[:return_to].delete
+    redirect_to(session[:return_to] || route)
+    session.delete(:return_to)
   end
 
   def store_location

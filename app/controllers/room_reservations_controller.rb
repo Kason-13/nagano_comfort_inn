@@ -2,7 +2,7 @@ require 'pry'
 require 'will_paginate/array'
 class RoomReservationsController < ApplicationController
   before_filter :admin_only_action, only: [:index]
-  before_filter :signed_in_client, only: [:new,:create]
+  before_filter :signed_in_client, only: [:new,:create,:client_reservations]
 
   def index
     all_reservation_ids = Reservation.all
@@ -14,6 +14,17 @@ class RoomReservationsController < ApplicationController
       @reservations.push([checkin_data,checkout_data])
     end
     @reservations = @reservations.paginate(page: params[:page], per_page:20)
+  end
+
+  def my_reservations
+    reservation_ids = Reservation.where("client_id = (?)",current_client.id)
+    @reservations = []
+    reservation_ids.each do |reservation|
+      @reservations.push(
+        [RoomReservation.where("reservation_id = (?)",reservation.id).order(:id)[0],
+        RoomReservation.where("reservation_id = (?)",reservation.id).order(:id)[-1]])
+    end
+    @reservations = @reservations.paginate(page: params[:page], per_page:10)
   end
 
   def new
@@ -31,9 +42,8 @@ class RoomReservationsController < ApplicationController
 
     checkin_date = Date.parse(params[:checkin_date])
     checkout_date = Date.parse(params[:checkout_date])
-
-
-    client = create_or_find_client(params[:form_email],params[:form_name])
+    #retrieve clients infos
+    client = current_client
 
     reservation = create_reservation_id(client.id)
 
@@ -48,18 +58,6 @@ class RoomReservationsController < ApplicationController
 
     def room_reservation_url(room_id)
       '/room_reservation/new/'+room_id.to_s
-    end
-
-    # method to find existing client in the DB if it exists. will create it if not
-    def create_or_find_client(email,name)
-      email.downcase!
-      if Client.where(:email => email).blank?
-        new_client = Client.new(name: name, email: email)
-        if(!new_client.save!)
-          render 'new'
-        end
-      end
-      Client.where(:email => email).first
     end
 
     def create_reservation_id(client_id)

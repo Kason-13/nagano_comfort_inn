@@ -11,6 +11,8 @@ NaganoComfortInn::Application.routes.draw do
 
   resources :clients, only: [:new, :create]
 
+  resources :sessions, only: [:new,:create,:destroy]
+
   get '/search' => 'rooms#search'
 
   get "static_pages/home"
@@ -18,7 +20,10 @@ NaganoComfortInn::Application.routes.draw do
 
   root to: 'static_pages#home'
 
+  match '/signin', to: 'sessions#new'
+
   match '/help', to: 'static_pages#help'
+
   match '/admin', to: 'static_pages#admin'
   match '/logoff_admin', to: 'static_pages#exit_admin'
 end

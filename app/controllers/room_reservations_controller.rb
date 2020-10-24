@@ -2,6 +2,7 @@ require 'pry'
 require 'will_paginate/array'
 class RoomReservationsController < ApplicationController
   before_filter :admin_only_action, only: [:index]
+  before_filter :signed_in_client, only: [:new,:create]
 
   def index
     all_reservation_ids = Reservation.all

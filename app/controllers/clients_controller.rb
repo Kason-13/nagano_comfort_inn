@@ -1,3 +1,4 @@
+require 'pry'
 class ClientsController < ApplicationController
   def new
     @client = Client.new

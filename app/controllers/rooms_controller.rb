@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
 
     #retrieve rooms that are available and paginate
     @rooms = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
-                        rooms_unavailable_ids,room_type_id,view_type_id)
+                        rooms_unavailable_ids, room_type_id, view_type_id)
                         .paginate(page: params[:page], per_page:5)
 
     @room_types_hashmap = hashmap_of_view_room_type_ls(create_roomType_list)

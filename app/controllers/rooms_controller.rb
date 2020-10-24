@@ -1,5 +1,6 @@
 require 'pry'
 class RoomsController < ApplicationController
+  before_filter :admin_only_action, only: [:edit,:create,:new]
 
   def search
     @checkin_date = params[:checkin_date]

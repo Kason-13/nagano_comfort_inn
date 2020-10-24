@@ -1,5 +1,5 @@
 class ViewTypesController < ApplicationController
-
+  before_filter :admin_only_action, only: [:index,:new,:create,:destroy,:edit]
   def new
     @view_type = ViewType.new
   end

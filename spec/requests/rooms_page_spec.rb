@@ -25,17 +25,33 @@ describe "room pages" do
     let(:room_type) { FactoryGirl.create(:room_type) }
     let(:test_room) { FactoryGirl.create(:room)}
 
-    before do
-      visit rooms_path
+    describe "in admin mode" do
+      before do
+        visit admin_path
+        visit rooms_path
+      end
+      it { should have_selector('a', text: "Create a new room") }
     end
+
+    describe "in client mode" do
+      before do
+        visit rooms_path
+      end
+      it { should_not have_selector('a', text: "Create a new room") }
+    end
+
     # describe "it should be at the correct page & display rooms"do
+    #   subject { page }
+    #   before do
+    #     visit rooms_path
+    #   end
     #   it { should have_selector('h6', text: "Room #5") }
     #   it { should have_selector('h6', text: "Room type: single bed") }
     #   it { should have_selector('h6', text: "Outside view: ocean") }
-    # end
-    # describe "when clicking on make a reservation! button" do
-    #   before {click_button "Make a reservation!"}
-    #   it { should have_selector('title', text: "New reservation") }
+      # describe "when clicking on make a reservation! button" do
+      #   before { click_button "Make a reservation!" }
+      #   it { should have_selector('title', text: "New reservation") }
+      # end
     # end
   end
 

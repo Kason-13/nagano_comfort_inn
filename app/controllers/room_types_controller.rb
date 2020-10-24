@@ -1,5 +1,5 @@
 class RoomTypesController < ApplicationController
-  #before_filter :admin_mode ---> to implement later
+  before_filter :admin_only_action, only: [:index,:new,:create,:destroy,:edit]
 
   def create
     @room_type = RoomType.new(params[:room_type])

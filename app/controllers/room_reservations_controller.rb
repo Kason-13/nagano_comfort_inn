@@ -1,6 +1,6 @@
 require 'pry'
 class RoomReservationsController < ApplicationController
-
+  before_filter :admin_only_action, only: [:index]
   def index
     @reservations = RoomReservation.paginate(page: params[:page], per_page:20)
   end

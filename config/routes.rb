@@ -9,6 +9,8 @@ NaganoComfortInn::Application.routes.draw do
   resources :room_types, only: [:index,:new,:create,:destroy]
   resources :view_types, only: [:index,:new,:create,:destroy]
 
+  resources :clients, only: [:new, :create]
+
   get '/search' => 'rooms#search'
 
   get "static_pages/home"

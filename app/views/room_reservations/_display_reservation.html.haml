@@ -1,7 +1,7 @@
 %li
   %h6
-    #{reservation.client_id}
+    Client name: #{@clients[@reservation_ids[reservation.reservation_id]]}
   %h6
-    #{reservation.date_id}
+    Date reservated: #{@dates[reservation.date_id]}
   %h6
-    #{reservation.room_id}
+    Room #: #{@rooms[reservation.room_id]}

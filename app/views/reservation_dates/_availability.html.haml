@@ -1,6 +1,11 @@
 .row
   %section
     =form_tag('/search', :method =>"get") do
+      -# Room's view?:
+      -# %select#viewtype(name="view_type_selected")
+      -#   -
+      -# Type of room?:
+      -# %select#roomtype(name="room_type_selected")
       .datepicker-group
         =render '/reservation_dates/datepickers'
         %input(type="submit" value="Search!")

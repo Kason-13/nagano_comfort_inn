@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201023112630) do
+ActiveRecord::Schema.define(:version => 20201023221957) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -33,14 +33,26 @@ ActiveRecord::Schema.define(:version => 20201023112630) do
 
   add_index "reservation_dates", ["date"], :name => "index_reservation_dates_on_date", :unique => true
 
-  create_table "room_reservations", :force => true do |t|
-    t.integer  "date_id"
-    t.integer  "room_id"
+  create_table "reservations", :force => true do |t|
     t.integer  "client_id"
-    t.decimal  "price"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "reservations", ["client_id"], :name => "index_reservations_on_client_id"
+
+  create_table "room_reservations", :force => true do |t|
+    t.integer  "date_id"
+    t.integer  "room_id"
+    t.decimal  "price"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "reservation_id"
+  end
+
+  add_index "room_reservations", ["date_id"], :name => "index_room_reservations_on_date_id"
+  add_index "room_reservations", ["reservation_id"], :name => "index_room_reservations_on_reservation_id"
+  add_index "room_reservations", ["room_id"], :name => "index_room_reservations_on_room_id"
 
   create_table "room_types", :force => true do |t|
     t.string   "room"
@@ -60,6 +72,9 @@ ActiveRecord::Schema.define(:version => 20201023112630) do
     t.integer  "room_type_id"
     t.integer  "view_type_id"
   end
+
+  add_index "rooms", ["room_type_id"], :name => "index_rooms_on_room_type_id"
+  add_index "rooms", ["view_type_id"], :name => "index_rooms_on_view_type_id"
 
   create_table "view_types", :force => true do |t|
     t.string   "view"

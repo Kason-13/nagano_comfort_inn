@@ -1,24 +1,17 @@
+require 'pry'
 class RoomsController < ApplicationController
 
   def search
-    checkin_date = params[:checkin_date]
-    checkout_date = params[:checkout_date]
+    @checkin_date = params[:checkin_date]
+    @checkout_date = params[:checkout_date]
 
-    # fetch records of dates that are between the checkin and checkout date
-    dates_booked = ReservationDate.where(["? >= date AND ? <= date",checkin_date,checkout_date])
-    dates_booked_ids = extract_ids(dates_booked)
 
-    # fetch the rooms that are gonna be unavailable using the dates_booked
-    rooms_unavailable = Room.joins(:room_reservations).where("date_id IN (?)",dates_booked_ids)
-    rooms_unavailable_ids = extract_ids(rooms_unavailable)
+    rooms_unavailable_ids = retrieve_unavailable_room_ids(@checkin_date,@checkout_date)
 
     #retrieve rooms that are available and paginate
     @rooms = Room.where("id NOT IN (?)",rooms_unavailable_ids).paginate(page: params[:page], per_page:5)
-    @room_types_hashmap = hashmap_of_view_or_room_type_ls(create_roomType_list)
-    @view_types_hashmap = hashmap_of_view_or_room_type_ls(create_viewType_list)
-
-    #render page index which shows the available rooms
-    render 'index'
+    @room_types_hashmap = hashmap_of_view_room_type_ls(create_roomType_list)
+    @view_types_hashmap = hashmap_of_view_room_type_ls(create_viewType_list)
   end
 
   def show
@@ -27,8 +20,8 @@ class RoomsController < ApplicationController
 
   def index
     @rooms = Room.paginate(page: params[:page], per_page:5)
-    @room_types_hashmap = hashmap_of_view_or_room_type_ls(create_roomType_list)
-    @view_types_hashmap = hashmap_of_view_or_room_type_ls(create_viewType_list)
+    @room_types_hashmap = hashmap_of_view_room_type_ls(create_roomType_list)
+    @view_types_hashmap = hashmap_of_view_room_type_ls(create_viewType_list)
   end
 
   def edit
@@ -55,5 +48,19 @@ class RoomsController < ApplicationController
 
   def destroy
   end
+
+  private
+
+    #method that returns a list of unavailable room ids list
+    #params checkin and checkout dates
+    def retrieve_unavailable_room_ids(checkin_date,checkout_date)
+      # fetch records of dates that are between the checkin and checkout date
+      dates_booked = ReservationDate.where(["date BETWEEN ? AND ?",checkin_date,checkout_date]) # problem here
+      dates_booked_ids = extract_ids(dates_booked)
+
+      # fetch the rooms that are gonna be unavailable using the dates_booked
+      rooms_unavailable = Room.joins(:room_reservations).where("date_id IN (?)",dates_booked_ids)
+      extract_ids(rooms_unavailable)
+    end
 
 end

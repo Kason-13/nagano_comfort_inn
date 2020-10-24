@@ -1,0 +1,7 @@
+=will_paginate
+
+%ul
+  -@rooms.each do |room|
+    =render 'display_room', room:room, room_types_hashmap:@room_types_hashmap ,view_types_hashmap: @view_types_hashmap
+
+=will_paginate

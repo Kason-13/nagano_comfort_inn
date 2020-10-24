@@ -26,7 +26,7 @@ module RoomHelper
 
   #creates a hashmap version of the view type list or room type list
   # in form id => type name
-  def hashmap_of_view_or_room_type_ls(list)
+  def hashmap_of_view_room_type_ls(list)
     hashmap_of_ls = {}
     list.each do |item|
       hashmap_of_ls[item[1]] = item[0]

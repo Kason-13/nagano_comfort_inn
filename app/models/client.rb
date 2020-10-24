@@ -13,7 +13,7 @@
 class Client < ActiveRecord::Base
   attr_accessible :age, :email, :name
 
-  has_many :reservations, foreign_key: "client_id"
+  has_many :reservations
 
   before_save { email.downcase! }
 

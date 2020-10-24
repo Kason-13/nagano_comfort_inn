@@ -4,37 +4,7 @@ class RoomReservationsController < ApplicationController
   end
 
   def index
-    # reservations = RoomReservation.find(:all,:joins=>"
-    #                                                   JOIN reservation_dates ON reservation_dates.id = room_reservations.date_id
-    #                                                   JOIN rooms ON rooms.id = room_reservations.room_id
-    #                                                   JOIN reservations ON reservations.id = room_reservations.reservation_id
-    #                                                   JOIN clients ON clients.id = reservations.client_id")
-
-
-    # ehhhh .... probably better to join the tables together
-    #  at this point, I'll do this later when I can
-    binding.pry
-    dates_hash = {}
-    ReservationDate.all.each do |date|
-      dates_hash[date.id] = date.date
-    end
-    rooms_hash = {}
-    Room.all.each do |room|
-      rooms_hash[room.id] = room.room_num
-    end
-    clients_name_hash = {}
-    Client.all.each do |client|
-      clients_name_hash[client.id] = client.name
-    end
-    reservation_ids_hash = {}
-    Reservation.all.each do |reservation|
-      reservation_ids_hash[reservation.id] = reservation.client_id
-    end
-    @clients = clients_name_hash
-    @rooms = rooms_hash
-    @dates = dates_hash
-    @reservation_ids = reservation_ids_hash
-    ##################################################################################################
+    @reservations = RoomReservation.paginate(page: params[:page], per_page:20)
   end
 
   def new

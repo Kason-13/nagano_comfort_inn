@@ -1,5 +1,9 @@
 class RoomReservation < ActiveRecord::Base
-  attr_accessible :reservation_id, :date_id, :price, :room_id
+  attr_accessible :reservation_id, :reservation_date_id, :price, :room_id
+
+  belongs_to :reservation_date
+  belongs_to :reservation
+  belongs_to :room
 
   validates(:reservation_id,presence:true)
   validates(:date_id,presence:true)

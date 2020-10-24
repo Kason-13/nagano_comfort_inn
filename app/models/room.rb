@@ -18,7 +18,7 @@ class Room < ActiveRecord::Base
 
   has_one :room_type
   has_one :view_type
-  has_many :room_reservations, foreign_key: "room_id"
+  has_many :room_reservations
 
   # to make verify those criteria upon saves/updates
   validates(:room_num, presence:true)

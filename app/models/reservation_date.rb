@@ -2,7 +2,7 @@ require 'date'
 class ReservationDate < ActiveRecord::Base
   attr_accessible :date, :different_price, :weekend
 
-  has_many :room_reservations, foreign_key: "date_id"
+  has_many :room_reservations
 
   validates(:date, presence:true)
 

@@ -4,4 +4,4 @@
   -if is_admin?
     =link_to 'Create a new room', new_admin_room_path, class: "btn btn-small btn-success"
 
-  =render 'rooms/room_list'
+  =render 'rooms/room_list', display_extra: false

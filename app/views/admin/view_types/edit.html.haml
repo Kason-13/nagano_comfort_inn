@@ -1,0 +1,9 @@
+=provide(:title, 'Edit view type')
+%center-form
+  %h5.listing-header Edit view: #{@view_type.view}
+  =form_for([:admin, @view_type]) do |f|
+    .center-form
+      =render 'shared/error_messages', object: f.object
+      Updated view name: #{f.text_field :view}
+      Updated view price: #{f.text_field :price}
+      = f.submit "Modify view type", class: "btn btn-large btn-primary"

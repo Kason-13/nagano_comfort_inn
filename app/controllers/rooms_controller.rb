@@ -17,6 +17,10 @@ class RoomsController < ApplicationController
                         rooms_unavailable_ids, room_type_id, view_type_id)
                         .paginate(page: params[:page], per_page:5)
 
+    price_modifiers_ids = ReservationDate.where(["date BETWEEN ? AND ?",@checkin_date,@checkout_date]).pluck(:price_modifier_id)
+    @price_modifiers = PriceModifier.where("id IN (?)",price_modifiers_ids).pluck(:price)
+
+    @weekend_price = WeekendPrice.first.price
     @room_types = RoomType.all
     @view_types = ViewType.all
   end

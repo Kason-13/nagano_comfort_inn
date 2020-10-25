@@ -1,6 +1,6 @@
 =provide(:title, 'Search result')
 %h5 Our rooms that available between #{@checkin_date} and #{@checkout_date}
 -if(@rooms.present?)
-  =render 'room_list'
+  =render 'room_list', display_extra: true
 -else
   %h5 Unfortunately, no rooms are available during these dates

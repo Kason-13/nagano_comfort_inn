@@ -1,6 +1,6 @@
 
 %ul
   -@rooms.each do |room|
-    =render 'rooms/display_room', room:room, room_types:@room_types[room.room_type_id-1] ,view_types: @view_types[room.view_type_id-1]
+    =render 'rooms/display_room',display_extra:display_extra ,room:room, room_types:@room_types[room.room_type_id-1] ,view_types: @view_types[room.view_type_id-1]
 
 =will_paginate

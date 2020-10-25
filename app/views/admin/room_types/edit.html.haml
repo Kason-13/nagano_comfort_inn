@@ -1,0 +1,10 @@
+=provide(:title, 'Edit room type')
+%center-form
+  %h5.listing-header Edit room type: #{@room_type.room}
+  =form_for([:admin, @room_type]) do |f|
+    .center-form
+      =render 'shared/error_messages', object: f.object
+      updated name: #{f.text_field :room}
+      %br
+      updated price: #{f.text_field :price}
+      = f.submit "Modify room type", class: "btn btn-large btn-primary"

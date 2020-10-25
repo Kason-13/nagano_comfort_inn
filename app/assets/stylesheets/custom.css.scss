@@ -21,11 +21,15 @@
 .flex-col *{
   margin-bottom: 2em;
 }
+.spaceout-bottom{
+  margin-bottom:1em;
+}
 
 /* listings */
 .listing-header{
   text-decoration: underline;
-  margin-bottom: 1em
+  margin-bottom: 1em;
+  text-align: center;
 }
 
 .styled-listing{
@@ -46,7 +50,7 @@
   background-image: url('https://radissonhotels.iceportal.com/image/country-inn-suites-by-radisson-erie-pa/exteriorview/16256-116591-f65039627_3xl.jpg');
   background-size:cover ;
   background-position: center;
-  color:#3295ae;
+  color:black;
 }
 
 /*footer*/

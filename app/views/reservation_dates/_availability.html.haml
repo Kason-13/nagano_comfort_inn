@@ -1,14 +1,23 @@
 .row
-  %section
+  .col-12
+    %h5.listing-header Search rooms by needs!
     =form_tag('/search', :method =>"get") do
-      Room's view?:
-      %select#viewtype(name="view_type_selected")
-        -@view_types.each do |view|
-          %option#selectView(value = "#{view.id}") #{view.view}
-      Type of room?:
-      %select#roomtype(name="room_type_selected")
-        -@room_types.each do |room|
-          %option#selectRoom(value = "#{room.id}") #{room.room}
-      .datepicker-group
-        =render '/reservation_dates/datepickers'
-        %input(type="submit" value="Search!")
+      .center-form
+        %br
+        Room's view?:
+        %select#viewtype(name="view_type_selected")
+          -@view_types.each do |view|
+            %option#selectView(value = "#{view.id}") #{view.view}
+        %br
+        Type of room?:
+        %select#roomtype(name="room_type_selected")
+          -@room_types.each do |room|
+            %option#selectRoom(value = "#{room.id}") #{room.room}
+        %br
+        Number of guess per room?:
+        %input#numberOfGuess(name = "numberOfGuess" type="number")
+        %br
+        .datepicker-group
+          =render '/reservation_dates/datepickers'
+          %br
+          %input(type="submit" value="Search!")

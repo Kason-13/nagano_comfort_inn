@@ -1,13 +1,13 @@
 =provide(:title,'signin')
-%row
-  %span6.offset3
-    =form_for(:session, url: sessions_path) do |f|
+.center-form
+  =form_for(:session, url: sessions_path) do |f|
+    .center-form
       = f.label :email
-      = f.text_field :email
+      = f.text_field :email ,class:"spaceout-bottom"
 
       = f.label :password
-      = f.password_field :password
+      = f.password_field :password ,class:"spaceout-bottom"
 
-      = f.submit "Sign in", class: "btn btn-large btn-primary"
+      = f.submit "Sign in", class: "btn btn-large btn-primary spaceout-bottom"
 
       %p New user? #{link_to "Sign up now!", new_client_path}

@@ -4,8 +4,8 @@ NaganoComfortInn::Application.routes.draw do
   get '/search' => 'rooms#search'
 
   namespace :admin do
-    resources :room_types, only: [:index,:new,:create,:destroy]
-    resources :view_types, only: [:index,:new,:create,:destroy]
+    resources :room_types, only: [:index,:edit,:update,:new,:create,:destroy]
+    resources :view_types, only: [:index,:edit,:update,:new,:create,:destroy]
     resources :rooms, only: [:new,:create,:destroy,:edit,:update]
     resources :price_modifiers
     resources :weekend_prices, only: [:edit,:update]

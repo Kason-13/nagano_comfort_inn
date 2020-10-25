@@ -17,6 +17,22 @@ class Admin::RoomTypesController < Admin::BaseController
     @room_type = RoomType.new
   end
 
+  def edit
+    @room_type = RoomType.find_by_id(params[:id])
+  end
+
+  def update
+    if(RoomType.find_by_id(params[:id]).update_attributes(params[:room_type]))
+      flash[:success] = "Updated informations for the view type"
+      redirect_to admin_room_types_path
+    else
+      render 'edit'
+    end
+  end
+
+  def delete
+  end
+
   def destroy
   end
 

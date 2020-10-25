@@ -6,16 +6,15 @@ class ReservationDate < ActiveRecord::Base
 
   validates(:date, presence:true)
 
-  before_save { set_weekend }
+  before_save :set_weekend
 
   private
     # to check if the date selected is a weekend
     def set_weekend
       # selectedDate = Date.parse(date)
-      weekend = false
+      self.weekend = nil
       if date.saturday? || date.sunday?
-        weekend = true
+        self.weekend = true
       end
-      nil
     end
 end

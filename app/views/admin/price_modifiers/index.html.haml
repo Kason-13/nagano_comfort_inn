@@ -1,0 +1,12 @@
+=provide(:title, 'Price modifiers')
+%h5 price modifiers
+.span6
+-will_paginate @price_modifiers
+  %ul
+    -@price_modifiers.each do |modifier|
+      %li
+        %h6 #{modifier.name}
+        %h6 #{modifier.price}
+.span6
+  Weekend add in price : #{@weekend_price.price}$
+  =link_to "edit", edit_admin_weekend_price_path(@weekend_price)

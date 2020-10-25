@@ -10,7 +10,9 @@ FactoryGirl.define do
 
   factory :client do
     name "arthax leGrand"
+    password "aaaAAA111"
     email "arthax@gmail.com"
+    password_confirmation "aaaAAA111"
   end
 
 end

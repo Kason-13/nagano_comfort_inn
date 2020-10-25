@@ -1,7 +1,7 @@
 =provide(:title,'New Room')
 .row
   .span6.offset3
-    =form_for(@room) do |f|
+    =form_for([:admin,@room]) do |f|
       =render 'shared/error_messages', object: f.object
       =render 'fields' , f: f
       =f.submit "Create new room", class:"btn btn-large btn-primary"

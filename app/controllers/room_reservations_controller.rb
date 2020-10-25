@@ -1,20 +1,7 @@
 require 'pry'
 require 'will_paginate/array'
 class RoomReservationsController < ApplicationController
-  before_filter :admin_only_action, only: [:index]
   before_filter :signed_in_client, only: [:new,:create,:client_reservations]
-
-  def index
-    all_reservation_ids = Reservation.all
-    @reservations = []
-    #fetch the data of the first and last day of reservation (mostly doing that for the checkin and checkout dates)
-    all_reservation_ids.each do |reservation|
-      checkin_data = RoomReservation.where("reservation_id = (?)",reservation.id).order(:id)[0]
-      checkout_data = RoomReservation.where("reservation_id = (?)",reservation.id).order(:id)[-1]
-      @reservations.push([checkin_data,checkout_data])
-    end
-    @reservations = @reservations.paginate(page: params[:page], per_page:20)
-  end
 
   def my_reservations
     reservation_ids = Reservation.where("client_id = (?)",current_client.id)
@@ -30,8 +17,8 @@ class RoomReservationsController < ApplicationController
   def new
     @room_id = params[:id]
     @room = Room.find_by_id(@room_id)
-    @room_types_hashmap = hashmap_of_view_room_type_ls(create_roomType_list)
-    @view_types_hashmap = hashmap_of_view_room_type_ls(create_viewType_list)
+    @room_type = RoomType.where("id = (?)",@room.room_type_id).first
+    @view_type = ViewType.where("id = (?)",@room.view_type_id).first
   end
 
   def create
@@ -68,7 +55,7 @@ class RoomReservationsController < ApplicationController
 
     # method that will create the room reservation and the date of the reservation if it's not already in the DB
     def make_reservation(day,reservation_id,room_id)
-      if ReservationDate.where(:date => day).blank?
+      if(ReservationDate.where(:date => day).blank?)
         new_reservation_date = ReservationDate.new(date:day)
         if(!new_reservation_date.save!)
           render 'new'

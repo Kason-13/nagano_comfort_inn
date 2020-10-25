@@ -1,8 +1,5 @@
 %h6
   Room ##{@room.room_num}
-%h6
-  Room type: #{@room_types_hashmap[@room.room_type_id]}
-%h6
-  Outside view: #{@view_types_hashmap[@room.view_type_id]}
+=render 'shared/display_room_and_view_types',room_types:@room_type,view_types: @view_type
 %h6
   insert image here ... when it's gonna be available (placeholder for image)

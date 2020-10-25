@@ -7,8 +7,8 @@ describe "view types page" do
   describe "visiting adding a new view type page" do
 
     before do
-      visit admin_path
-      visit new_view_type_path
+      visit admin_mode_path
+      visit new_admin_view_type_path
     end
     it { should have_selector('title', text: " | Add view type") }
     describe "creating a new room type" do

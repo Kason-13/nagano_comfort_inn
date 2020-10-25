@@ -1,20 +1,24 @@
 NaganoComfortInn::Application.routes.draw do
 
-  resources :rooms
+  resources :rooms, only: [:index,:show]
+  get '/search' => 'rooms#search'
+
+  namespace :admin do
+    resources :room_types, only: [:index,:new,:create,:destroy]
+    resources :view_types, only: [:index,:new,:create,:destroy]
+    resources :rooms, only: [:new,:create,:destroy,:edit,:update]
+    resources :price_modifiers
+    resources :weekend_prices, only: [:edit,:update]
+    get '/room_reservations' => 'room_reservations#index'
+  end
 
   get '/room_reservation/new/:id' => 'room_reservations#new'
   post '/room_reservation/new/:id' => 'room_reservations#create'
-  get '/room_reservations' => 'room_reservations#index'
   get '/my_reservations' => 'room_reservations#my_reservations'
-
-  resources :room_types, only: [:index,:new,:create,:destroy]
-  resources :view_types, only: [:index,:new,:create,:destroy]
 
   resources :clients, only: [:new, :create]
 
   resources :sessions, only: [:new,:create,:destroy]
-
-  get '/search' => 'rooms#search'
 
   get "static_pages/home"
   get "static_pages/help"
@@ -26,6 +30,6 @@ NaganoComfortInn::Application.routes.draw do
 
   match '/help', to: 'static_pages#help'
 
-  match '/admin', to: 'static_pages#admin'
+  match '/admin_mode', to: 'static_pages#admin'
   match '/logoff_admin', to: 'static_pages#exit_admin'
 end

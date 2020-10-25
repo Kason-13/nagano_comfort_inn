@@ -10,16 +10,16 @@
         = link_to 'View our rooms', rooms_path
       -if !is_admin? && !is_signed_in?
         %li.nav-item.mx-2
-          = link_to "Admin mode", admin_path
+          = link_to "Admin mode", admin_mode_path
         %li.nav-item.mx-2
           = link_to "Sign in", signin_path
       -if is_admin?
         %li.nav-item.mx-2
-          = link_to "View all reservations", room_reservations_path
+          = link_to "All reservations", admin_room_reservations_path
         %li.nav-item.mx-2
-          = link_to "View all room types", room_types_path
+          = link_to "Room types", admin_room_types_path
         %li.nav-item.mx-2
-          = link_to "View all view types", view_types_path
+          = link_to "View types", admin_view_types_path
         %li.nav-item.mx-2
           = link_to "Exit admin mode", logoff_admin_path
       -if is_signed_in?

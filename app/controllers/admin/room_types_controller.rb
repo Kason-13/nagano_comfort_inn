@@ -1,4 +1,4 @@
-class RoomTypesController < ApplicationController
+class Admin::RoomTypesController < Admin::BaseController
   before_filter :admin_only_action, only: [:index,:new,:create,:destroy,:edit]
 
   def create
@@ -6,7 +6,7 @@ class RoomTypesController < ApplicationController
     if(@room_type.save)
       flash[:success] = "Room type has been saved into the available choices"
     end
-    redirect_to room_types_path
+    redirect_to admin_room_types_path
   end
 
   def index

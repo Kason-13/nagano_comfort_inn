@@ -1,0 +1,8 @@
+=provide(:title, 'Edit weekend price')
+%h5 Edit weekend top up price
+.row
+  .span6.offset3
+    =form_for([:admin,@weekend_price]) do |f|
+      =render 'shared/error_messages',object:f.object
+      New price: #{f.text_field :price}
+      =f.submit "Modify weekend top up price", class:"btn btn-large btn-primary"

@@ -2,6 +2,6 @@
 
 %ul
   -@reservations.each do |reservation|
-    =render 'display_reservation' , reservation:reservation
+    =render 'room_reservations/display_reservation' , reservation:reservation
 
 =will_paginate @reservations

@@ -6,8 +6,8 @@ describe "room types pages" do
 
   describe "visiting adding a new room type page" do
     before do
-      visit admin_path
-      visit new_room_type_path
+      visit admin_mode_path
+      visit new_admin_room_type_path
     end
     it { should have_selector('title', text: " | Add room type")}
     describe "creating a new room type" do

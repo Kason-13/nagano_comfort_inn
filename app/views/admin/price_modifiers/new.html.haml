@@ -1,0 +1,16 @@
+=provide(:title, 'New price modifier')
+.row
+  .span6.offset3
+    =form_for([:admin,@price_modifier]) do |f|
+      =render 'shared/error_messages', object: f.object
+      name: #{f.text_field :name}
+      Price: #{f.text_field :price}
+      %label(for="from_date") from date:
+      %input#from(name="from_date" type="date")
+      %label(for="to_date") to date:
+      %input#to(name="to_date" type="date")
+      =f.submit "Create new price modifier", class:"btn btn-large btn-primary"
+      :javascript
+        var today = new Date().toISOString().split('T')[0];
+        document.querySelector("#from").setAttribute('min',today);
+        document.querySelector("#to").setAttribute('min',today);

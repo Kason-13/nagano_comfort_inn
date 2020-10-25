@@ -1,7 +1,7 @@
 =provide(:title, 'Add view type')
 .row
   .span6.offset3
-    =form_for(@view_type) do |f|
+    =form_for([:admin,@view_type]) do |f|
       =render 'shared/error_messages', object: f.object
       =render 'fields' , f:f
       =f.submit "Create new view type", class:"btn btn-large btn-primary"

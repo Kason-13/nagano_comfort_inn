@@ -1,4 +1,4 @@
-class ViewTypesController < ApplicationController
+class Admin::ViewTypesController < Admin::BaseController
   before_filter :admin_only_action, only: [:index,:new,:create,:destroy,:edit]
   def new
     @view_type = ViewType.new
@@ -9,7 +9,7 @@ class ViewTypesController < ApplicationController
     if(@view_type.save)
       flash[:success] = "View type has been saved into the available choices"
     end
-    redirect_to view_types_path
+    redirect_to admin_view_types_path
   end
 
   def destroy

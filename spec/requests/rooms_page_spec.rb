@@ -27,7 +27,7 @@ describe "room pages" do
 
     describe "in admin mode" do
       before do
-        visit admin_path
+        visit admin_mode_path
         visit rooms_path
       end
       it { should have_selector('a', text: "Create a new room") }

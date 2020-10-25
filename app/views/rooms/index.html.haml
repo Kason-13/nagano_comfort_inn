@@ -1,6 +1,6 @@
 =provide(:title, 'All Rooms')
 %h5 Our rooms!
 -if is_admin?
-  =link_to 'Create a new room', new_room_path, class: "btn btn-small btn-success"
+  =link_to 'Create a new room', new_admin_room_path, class: "btn btn-small btn-success"
 
-=render 'room_list'
+=render 'rooms/room_list'

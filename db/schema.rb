@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201024152627) do
+ActiveRecord::Schema.define(:version => 20201025064539) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -25,15 +25,23 @@ ActiveRecord::Schema.define(:version => 20201024152627) do
   add_index "clients", ["email"], :name => "index_clients_on_email", :unique => true
   add_index "clients", ["remember_token"], :name => "index_clients_on_remember_token"
 
+  create_table "price_modifiers", :force => true do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "reservation_dates", :force => true do |t|
     t.date     "date"
     t.boolean  "weekend"
-    t.integer  "different_price"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "price_modifier_id"
   end
 
   add_index "reservation_dates", ["date"], :name => "index_reservation_dates_on_date", :unique => true
+  add_index "reservation_dates", ["price_modifier_id"], :name => "index_reservation_dates_on_price_modifier_id"
 
   create_table "reservations", :force => true do |t|
     t.integer  "client_id"
@@ -87,5 +95,11 @@ ActiveRecord::Schema.define(:version => 20201024152627) do
   end
 
   add_index "view_types", ["view"], :name => "index_view_types_on_view", :unique => true
+
+  create_table "weekend_prices", :force => true do |t|
+    t.decimal  "price"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

@@ -15,13 +15,7 @@
           = link_to "Sign in", signin_path
       -if is_admin?
         %li.nav-item.mx-2
-          = link_to "All reservations", admin_room_reservations_path
-        %li.nav-item.mx-2
-          = link_to "Room types", admin_room_types_path
-        %li.nav-item.mx-2
-          = link_to "View types", admin_view_types_path
-        %li.nav-item.mx-2
-          = link_to "Exit admin mode", logoff_admin_path
+          = link_to "Admin pannel", admin_pannel_path
       -if is_signed_in?
         %li.nav-item.mx-2
           = link_to "My reservations", my_reservations_path

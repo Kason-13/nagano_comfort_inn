@@ -23,7 +23,6 @@ class RoomReservationsController < ApplicationController
 
   def create
     if(params[:checkin_date].empty? || params[:checkout_date].empty?)
-      #room_reservation_url(params[:id])
       #currently not functioning properly, idk why
     end
 
@@ -38,14 +37,15 @@ class RoomReservationsController < ApplicationController
       make_reservation(day, reservation.id, params[:id])
     end
 
-    redirect_to rooms_path # for now, need to make a resume of their reservation
+    redirect_to '/reservation_summary/'+reservation.id.to_s
+  end
+
+  def reservation_summary
+    @reservations = RoomReservation.where("reservation_id = (?)",params[:id])
+    @client = Client.find_by_id(Reservation.find_by_id(params[:id]).client_id)
   end
 
   private
-
-    def room_reservation_url(room_id)
-      '/room_reservation/new/'+room_id.to_s
-    end
 
     def create_reservation_id(client_id)
       new_reservation_id = Reservation.new(client_id:client_id)
@@ -63,7 +63,6 @@ class RoomReservationsController < ApplicationController
       end
       found_date = ReservationDate.where(:date => day).first
       price = calc_price(found_date,room_id)
-      binding.pry
       new_room_reservation = RoomReservation.new(reservation_date_id:found_date.id , room_id: room_id, reservation_id: reservation_id, price: price )
       if(!new_room_reservation.save!)
         render 'new'

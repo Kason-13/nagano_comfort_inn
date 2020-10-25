@@ -10,7 +10,7 @@ class Admin::RoomsController < Admin::BaseController
   def create
     @room = Room.new(params[:room])
     if(@room.save)
-      redirect_to @room
+      redirect_to rooms_path
     else
       render 'new'
     end

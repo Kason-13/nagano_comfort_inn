@@ -2,4 +2,3 @@ Room number: #{f.text_field :room_num}
 Available?: #{f.check_box :status}
 View type?: #{f.select(:view_type_id, options_for_select(@view_types_ls,1),{})}
 Room type?: #{f.select(:room_type_id, options_for_select(@room_types_ls,1),{})}
-Set Base Price: #{f.text_field :price}

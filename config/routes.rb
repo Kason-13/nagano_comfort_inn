@@ -15,6 +15,7 @@ NaganoComfortInn::Application.routes.draw do
   get '/room_reservation/new/:id' => 'room_reservations#new'
   post '/room_reservation/new/:id' => 'room_reservations#create'
   get '/my_reservations' => 'room_reservations#my_reservations'
+  get '/reservation_summary/:id' => 'room_reservations#reservation_summary'
 
   resources :clients, only: [:new, :create]
 
@@ -31,5 +32,6 @@ NaganoComfortInn::Application.routes.draw do
   match '/help', to: 'static_pages#help'
 
   match '/admin_mode', to: 'static_pages#admin'
+  match '/admin_pannel', to: 'static_pages#admin_pannel'
   match '/logoff_admin', to: 'static_pages#exit_admin'
 end

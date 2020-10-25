@@ -13,6 +13,8 @@
 class ViewType < ActiveRecord::Base
   attr_accessible :view, :price
 
+  has_many :room_reservations
+
   validates(:view, presence:true)
   validates(:price, presence:true)
 end

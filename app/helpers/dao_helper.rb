@@ -1,3 +1,0 @@
-module DaoHelper
-
-end

@@ -1,0 +1,24 @@
+=provide(:title,'Reservation summary')
+
+.container
+  .row
+    .col-md
+      .center-form
+        %h4 Summary of reservation
+        %h6.styled-listing Reservated by: #{@client.name}
+        %h6.styled-listing Client email: #{@client.email}
+        %h6.styled-listing Room number: #{@reservations[0].room.room_num}
+        %h6.styled-listing Checkin-date: #{@reservations[0].reservation_date.date}
+        %h6.styled-listing Checkout-date: #{@reservations[night_counts(@reservations)-1].reservation_date.date}
+        %h6.styled-listing Total price for #{night_counts(@reservations)} nights: #{total_price(@reservations)}$
+        %button.btn.btn-primary(aria-controls="collapseSummary" aria-expended="false" data-target="#collapseSummary" data-toggle="collapse" type="button")
+          Toggle price breakdown
+        %button.btn.btn-success
+          Email me the summary
+        .collapse#collapseSummary
+          .center-form
+            %ul
+            -@reservations.each do |reservation_day|
+              %li.styled-listing
+                %h6 Reservated date: #{reservation_day.reservation_date.date}
+                %h6 Price for the night: #{reservation_day.price}$

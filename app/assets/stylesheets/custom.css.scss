@@ -12,6 +12,34 @@
   font-family: -apple-system
 }
 
+/* layout formatting */
+.flex-col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.flex-col *{
+  margin-bottom: 2em;
+}
+
+/* listings */
+.listing-header{
+  text-decoration: underline;
+  margin-bottom: 1em
+}
+
+.styled-listing{
+  list-style: none;
+  margin-bottom: 1em;
+}
+
+.add-bottom-border{
+  border-bottom: 1px solid black
+}
+// .add-bottom-border:last-of-type{
+//   border-bottom: 0
+// }
+
 /*jumbotron*/
 .jumbotron{
   text-align: center;
@@ -36,6 +64,12 @@ footer{
 form{
   display: flex;
   flex-direction: column;
+}
+
+.center-form{
+  width: 50%;
+  margin:auto;
+  text-align: center;
 }
 
 

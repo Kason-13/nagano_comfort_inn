@@ -7,6 +7,6 @@
 =will_paginate
 %ul
   -@view_types.each do |view_type|
-    =render 'shared/types',  name: view_type.view
+    =render 'shared/types',  name: view_type.view, price: view_type.price
 
 =will_paginate

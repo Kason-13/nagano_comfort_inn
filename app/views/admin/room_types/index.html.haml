@@ -7,6 +7,6 @@
 
 %ul
   - @room_types.each do |room_type|
-    =render 'shared/types', name: room_type.room
+    =render 'shared/types', name: room_type.room, price: room_type.price
 
 = will_paginate

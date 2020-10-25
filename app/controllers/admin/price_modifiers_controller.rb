@@ -15,7 +15,7 @@ class Admin::PriceModifiersController < Admin::BaseController
     to_date = Date.parse(params[:to_date])
 
     @price_modifier = PriceModifier.new(params[:price_modifier])
-    if(@price_modifier.save!)
+    if(!@price_modifier.save!)
       render 'new'
     end
 

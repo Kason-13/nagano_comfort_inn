@@ -62,10 +62,25 @@ class RoomReservationsController < ApplicationController
         end
       end
       found_date = ReservationDate.where(:date => day).first
-      new_room_reservation = RoomReservation.new(reservation_date_id:found_date.id , room_id: room_id, reservation_id: reservation_id )
+      price = calc_price(found_date,room_id)
+      binding.pry
+      new_room_reservation = RoomReservation.new(reservation_date_id:found_date.id , room_id: room_id, reservation_id: reservation_id, price: price )
       if(!new_room_reservation.save!)
         render 'new'
       end
+    end
+
+    def calc_price(date,room_id)
+      price = 0
+      if(!date.weekend.nil?)
+        price +=  WeekendPrice.first.price
+      end
+      price += ViewType.find_by_id(Room.find_by_id(room_id).view_type_id).price
+      price += RoomType.find_by_id(Room.find_by_id(room_id).room_type_id).price
+      if(!date.price_modifier_id.nil?)
+        price += PriceModifier.find_by_id(date.price_modifier_id).price
+      end
+      price
     end
 
 end

@@ -2,9 +2,18 @@ class Admin::RoomsController < Admin::BaseController
   before_filter :admin_only_action, only: [:edit,:update,:destroy,:create,:new]
 
   def edit
+    @room = Room.find_by_id(params[:id])
+    @view_types_ls = create_viewType_list
+    @room_types_ls = create_roomType_list
   end
 
-  def updated
+  def update
+    if(Room.find_by_id(params[:id]).update_attributes(params[:room]))
+      flash[:success] = "Updated room listing"
+      redirect_to rooms_path
+    else
+      render 'edit'
+    end
   end
 
   def create

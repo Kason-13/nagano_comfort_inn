@@ -7,11 +7,13 @@
       -will_paginate @price_modifiers
       %ul
       -@price_modifiers.each do |modifier|
-        %li
+        %li.add-bottom-border
           %h6
             name: #{modifier.name}
           %h6
             price: #{modifier.price}$
+          = link_to "edit", edit_admin_price_modifier_path(modifier)
+          = link_to "delete", admin_price_modifier_path(modifier), method: :delete, data: {confirm: "Delete the price modifier?"} , class:"mx-2"
     .col-md
       Weekend add in price : #{@weekend_price.price}$
       =link_to "edit", edit_admin_weekend_price_path(@weekend_price)

@@ -26,9 +26,6 @@ class Admin::ViewTypesController < Admin::BaseController
     end
   end
 
-  def delete
-  end
-
   def destroy
   end
 

@@ -30,8 +30,6 @@ class Admin::RoomTypesController < Admin::BaseController
     end
   end
 
-  def delete
-  end
 
   def destroy
   end

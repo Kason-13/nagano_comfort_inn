@@ -14,8 +14,11 @@
           -@room_types.each do |room|
             %option#selectRoom(value = "#{room.id}") #{room.room}
         %br
-        Number of guess per room?:
-        %input#numberOfGuess(name = "numberOfGuess" type="number")
+        Number of guess?:
+        %input#numberOfGuess(name = "number_of_guess" type="number")
+        %br
+        Number of rooms?:
+        %input#numberOfRooms(name = "number_of_rooms" type="number")
         %br
         .datepicker-group
           =render '/reservation_dates/datepickers'

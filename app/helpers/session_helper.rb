@@ -1,6 +1,7 @@
 require 'pry'
 module SessionHelper
 
+  #############################    user   ############################
   def sign_in(client)
     cookies.permanent[:remember_token] = client.remember_token
     self.current_client = client
@@ -34,7 +35,7 @@ module SessionHelper
     end
   end
 
-
+ ############################ admin #########################
 
   def admin_mode
     session[:admin] = true
@@ -66,4 +67,6 @@ module SessionHelper
   def store_location
     session[:return_to] = request.url
   end
+
+
 end

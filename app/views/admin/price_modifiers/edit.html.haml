@@ -1,0 +1,9 @@
+=provide(:title,'Edit price modifier')
+
+.col-md
+  %h5.listing-header Edit #{@price_modifier.name}'s price
+  .center-form.sm-width
+    =form_for([:admin,@price_modifier]) do |f|
+      =render 'shared/error_messages', object: f.object
+      New price: #{f.text_field :price}
+      =f.submit "Modify "+@price_modifier.name+"'s price", class:"btn btn-large btn-primary"

@@ -1,0 +1,9 @@
+=provide(:title,'Edit room')
+
+.col-md
+  %h5.listing-header Edit room ##{@room.room_num}
+  .center-form.sm-width
+    =form_for([:admin,@room]) do |f|
+      =render 'shared/error_messages', object: f.object
+      =render 'fields' , f:f
+      =f.submit "Modify room #"+@room.room_num.to_s

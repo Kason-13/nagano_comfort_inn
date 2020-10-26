@@ -14,7 +14,7 @@
 
 
 class Room < ActiveRecord::Base
-  attr_accessible :room_num, :status, :price, :room_type_id, :view_type_id
+  attr_accessible :room_num, :status, :price, :room_type_id, :view_type_id, :num_of_guess
 
   belongs_to :room_type
   belongs_to :view_type

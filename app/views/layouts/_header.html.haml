@@ -6,8 +6,9 @@
     %ul.navbar-nav
       %li.nav-item.mx-2
         = link_to 'Make a reservation', root_path
-      %li.nav-item.mx-2
-        = link_to 'View our rooms', rooms_path
+      -if !is_admin? || is_signed_in?
+        %li.nav-item.mx-2
+          = link_to 'View our rooms', rooms_path
       -if !is_admin? && !is_signed_in?
         %li.nav-item.mx-2
           = link_to "Admin mode", admin_mode_path

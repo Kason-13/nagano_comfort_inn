@@ -26,15 +26,22 @@ class Admin::PriceModifiersController < Admin::BaseController
   end
 
   def update
+    if(PriceModifier.find_by_id(params[:id]).update_attributes(params[:price_modifier]))
+      flash[:success] = "Price has been modified"
+      redirect_to admin_price_modifiers_path
+    else
+      render 'edit'
+    end
   end
 
   def edit
+    @price_modifier = PriceModifier.find_by_id(params[:id])
   end
 
   def destroy
-  end
-
-  def delete
+    PriceModifier.find(params[:id]).destroy
+    flash[:success] = "Removed price modifier"
+    redirect_to admin_price_modifiers_path
   end
 
   private

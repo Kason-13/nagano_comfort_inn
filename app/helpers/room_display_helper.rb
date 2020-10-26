@@ -17,9 +17,15 @@ module RoomDisplayHelper
     end
   end
 
+  #returns the number of days between two dates
+  def days_between_dates(date1,date2)
+    (Date.parse(date2)-Date.parse(date1)).to_i
+  end
+
+  #calculate total price to display for chosen dates
   def calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
     total = 0
-    (from_date..to_date).each do |day|
+    (Date.parse(from_date)..Date.parse(to_date)).each do |day|
       total += room.view_type.price
       total += room.room_type.price
       parsed_day = day.to_date
@@ -27,8 +33,8 @@ module RoomDisplayHelper
         total += weekend_price
       end
     end
-    if(price_modifier.present?)
-      price_modifier.each do |price|
+    if(price_modifiers.present?)
+      price_modifiers.each do |price|
         total += price
       end
     end

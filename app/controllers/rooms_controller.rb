@@ -14,12 +14,19 @@ class RoomsController < ApplicationController
     rooms_unavailable_ids.push(0)
 
     #retrieve rooms that are available and paginate
-    @rooms = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?) AND num_of_guess >= (?)",
-                        rooms_unavailable_ids, room_type_id, view_type_id,number_of_guess)
+    @rooms = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
+                        rooms_unavailable_ids, room_type_id, view_type_id)
                         .paginate(page: params[:page], per_page:5)
 
-    optimal_ls = return_optimal_room_choices(number_of_rooms,number_of_guess,@rooms)
+    rooms_recommandations = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?) AND num_of_guess <= (?)",
+                            rooms_unavailable_ids, room_type_id, view_type_id,number_of_guess)
 
+    optimal_ls = return_optimal_room_choices(number_of_rooms,number_of_guess,rooms_recommandations)
+
+    @rooms_recommanded = []
+    optimal_ls.each do |room_index|
+      @rooms_recommanded.push(rooms_recommandations[room_index])
+    end
 
     price_modifiers_ids = ReservationDate.where(["date BETWEEN ? AND ?",@checkin_date,@checkout_date]).pluck(:price_modifier_id)
 
@@ -56,38 +63,40 @@ class RoomsController < ApplicationController
     end
 
     def return_optimal_room_choices(number_of_rooms,number_of_guess,rooms)
+      number_of_rooms = number_of_rooms.to_i
+      number_of_guess = number_of_guess.to_i
 
       rooms_of = number_of_guess/number_of_rooms
       extra = number_of_guess%rooms_of
       rooms_capacities = rooms.pluck(:num_of_guess)
       optimal_rooms = []
-
       if(extra != 0)
         number_of_rooms-=1
-        room_index = append_room_or_alternative(rooms_capacities,extra)
+        room_index = append_room_or_alternative(rooms_capacities,extra+rooms_of)
         rooms_capacities[room_index] = 0
         optimal_rooms.push(room_index)
       end
 
-      for i in 0..number_of_rooms
+      for i in 0..number_of_rooms-1
         room_index = append_room_or_alternative(rooms_capacities,rooms_of)
         rooms_capacities[room_index] = 0
         optimal_rooms.push(room_index)
       end
 
+      optimal_rooms
     end
 
     def append_room_or_alternative(rooms_capacities,rooms_of)
       room_index = nil
-      if(rooms_capacities.include(rooms_of))
+      if(rooms_capacities.include?(rooms_of))
         index = rooms_capacities.index(rooms_of)
         room_index = index
         rooms_capacities[index] = 0
       else
         alternative = rooms_of + 1
-        if(alternative <= rooms_capacities(max))
-          for n in alternative..rooms_capacities(max)
-            if(rooms_capacities.includes(n))
+        if(alternative <= rooms_capacities.max)
+          for n in alternative..rooms_capacities.max
+            if(rooms_capacities.include?(n))
               index = rooms_capacities.index(n)
               room_index = index
               break

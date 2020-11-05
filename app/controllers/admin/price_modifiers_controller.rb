@@ -3,6 +3,9 @@ class Admin::PriceModifiersController < Admin::BaseController
   before_filter :admin_only_action
   def index
     @price_modifiers = PriceModifier.paginate(page:params[:page])
+    if(WeekendPrice.first.nil?)
+      WeekendPrice.create :price => '0.00'
+    end
     @weekend_price = WeekendPrice.first
   end
 

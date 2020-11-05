@@ -41,4 +41,13 @@ module RoomDisplayHelper
     total
   end
 
+  #for total price of suggested package
+  def suggested_reservation_price(from_date, to_date, rooms, price_modifiers, weekend_price)
+    total = 0
+    rooms.each do |room|
+      total += calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
+    end
+    total
+  end
+
 end

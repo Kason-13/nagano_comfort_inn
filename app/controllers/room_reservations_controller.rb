@@ -72,6 +72,9 @@ class RoomReservationsController < ApplicationController
     def calc_price(date,room_id)
       price = 0
       if(!date.weekend.nil?)
+        if(WeekendPrice.first.nil?)
+          WeekendPrice.create :price => '0.00'
+        end
         price +=  WeekendPrice.first.price
       end
       price += ViewType.find_by_id(Room.find_by_id(room_id).view_type_id).price

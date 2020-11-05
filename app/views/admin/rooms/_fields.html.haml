@@ -1,5 +1,4 @@
 Room number: #{f.text_field :room_num}
-Available?: #{f.check_box :status}
 Number of guess supported: #{f.number_field :num_of_guess}
 View type?: #{f.select(:view_type_id, options_for_select(@view_types_ls,1),{})}
 Room type?: #{f.select(:room_type_id, options_for_select(@room_types_ls,1),{})}

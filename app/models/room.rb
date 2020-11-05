@@ -22,7 +22,7 @@ class Room < ActiveRecord::Base
 
   # to make verify those criteria upon saves/updates
   validates(:room_num, presence:true)
-  validates(:status, presence:true)
   validates(:room_type_id, presence:true)
+  validates(:num_of_guess, presence:true)
   validates(:view_type_id,presence:true)
 end

@@ -32,6 +32,9 @@ class RoomsController < ApplicationController
 
     @price_modifiers = PriceModifier.where("id IN (?)",price_modifiers_ids).pluck(:price)
 
+    if(WeekendPrice.first.nil?)
+      WeekendPrice.create :price => '0.00'
+    end
     @weekend_price = WeekendPrice.first.price
     @room_types = RoomType.all
     @view_types = ViewType.all
@@ -73,12 +76,18 @@ class RoomsController < ApplicationController
       if(extra != 0)
         number_of_rooms-=1
         room_index = append_room_or_alternative(rooms_capacities,extra+rooms_of)
+        if(room_index.nil?)
+          return []
+        end
         rooms_capacities[room_index] = 0
         optimal_rooms.push(room_index)
       end
 
       for i in 0..number_of_rooms-1
         room_index = append_room_or_alternative(rooms_capacities,rooms_of)
+        if(room_index.nil?)
+          return []
+        end
         rooms_capacities[room_index] = 0
         optimal_rooms.push(room_index)
       end

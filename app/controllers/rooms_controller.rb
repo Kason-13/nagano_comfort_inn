@@ -62,11 +62,11 @@ class RoomsController < ApplicationController
       #for some reason, it won't work if list is empty
       dates_booked_ids.push(0)
 
-
       # fetch the rooms that are gonna be unavailable using the dates_booked_ids
       Room.joins(:room_reservations).where("reservation_date_id IN (?)",dates_booked_ids).pluck(:id)
     end
 
+    #method that returns a list of index for room recommanded based on the client's criterias
     def return_optimal_room_choices(number_of_rooms,number_of_guess,rooms)
       number_of_rooms = number_of_rooms.to_i
       number_of_guess = number_of_guess.to_i

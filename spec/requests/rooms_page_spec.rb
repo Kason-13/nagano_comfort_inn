@@ -8,15 +8,15 @@ describe "room pages" do
   describe "visiting the room's page" do
 
     let(:test_room) { FactoryGirl.create(:room) }
-    #room --> room_num:5,status:true
+    #room --> room_num:5
 
-    describe "should display the correct informations" do
-      before do
-        visit room_path(test_room)
-      end
-      it { should have_selector('title', text: " | Room 5" ) }
-      it { should have_selector('h5', text: "available" ) }
-    end
+    # describe "should display the room informations" do
+    #   before do
+    #     visit rooms_path
+    #   end
+    #   it { should have_selector('title', text: " All rooms" ) }
+    #   it { should have_selector('h6', text: "Room #5" )}
+    # end
 
   end
 

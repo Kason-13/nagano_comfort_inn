@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :room do
     room_num 5
     status true
-    price 500.25
+    num_of_guess 2
     view_type_id 1
     room_type_id 1
   end

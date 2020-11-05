@@ -18,9 +18,11 @@ class RoomsController < ApplicationController
                         rooms_unavailable_ids, room_type_id, view_type_id)
                         .paginate(page: params[:page], per_page:5)
 
+    #list used for optimal room choices
     rooms_recommandations = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?) AND num_of_guess <= (?)",
                             rooms_unavailable_ids, room_type_id, view_type_id,number_of_guess)
 
+    #list of room that responds to criterias
     optimal_ls = return_optimal_room_choices(number_of_rooms,number_of_guess,rooms_recommandations)
 
     @rooms_recommanded = []
@@ -73,9 +75,12 @@ class RoomsController < ApplicationController
       extra = number_of_guess%rooms_of
       rooms_capacities = rooms.pluck(:num_of_guess)
       optimal_rooms = []
+
+      # if an extra room is necessary
       if(extra != 0)
         number_of_rooms-=1
         room_index = append_room_or_alternative(rooms_capacities,extra+rooms_of)
+        #returns an empty list if no possibilities are found
         if(room_index.nil?)
           return []
         end
@@ -83,8 +88,10 @@ class RoomsController < ApplicationController
         optimal_rooms.push(room_index)
       end
 
+      #for each rooms
       for i in 0..number_of_rooms-1
         room_index = append_room_or_alternative(rooms_capacities,rooms_of)
+        #returns an empty list if no possibilities are found
         if(room_index.nil?)
           return []
         end
@@ -95,13 +102,17 @@ class RoomsController < ApplicationController
       optimal_rooms
     end
 
+    #looks for the room that responds to the guess capacity need
+    #returns the index of the room, will return nil if nothing ideal is found
     def append_room_or_alternative(rooms_capacities,rooms_of)
       room_index = nil
+      #checks if there's a perfect fit for # of guess
       if(rooms_capacities.include?(rooms_of))
         index = rooms_capacities.index(rooms_of)
         room_index = index
         rooms_capacities[index] = 0
       else
+        # tries to find the closest fit by incrementing the # of guess
         alternative = rooms_of + 1
         if(alternative <= rooms_capacities.max)
           for n in alternative..rooms_capacities.max

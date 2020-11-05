@@ -3,19 +3,20 @@
 
 %center-form
   %h6 Based on your criterias, we recommand the reservation of these rooms
-  -if(@rooms_recommanded.empty?)
-    %h5 No packages could be recommanded based on your criterias!
-  -else
-    -@rooms_recommanded.each do |room|
-      %h6 Room: ##{room.room_num}
-      %h6 Room type: #{room.room_type.room}
-      %h6 Outside's view: #{room.view_type.view}
-      %h6 accomadates #{room.num_of_guess} guess
+  .add-border
+    -if(@rooms_recommanded.empty?)
+      %h5 No packages could be recommanded based on your criterias!
+    -else
+      -@rooms_recommanded.each do |room|
+        %h6 Room: ##{room.room_num}
+        %h6 Room type: #{room.room_type.room}
+        %h6 Outside's view: #{room.view_type.view}
+        %h6 accomadates #{room.num_of_guess} guess
+        %hr
+      %h6 Reservation for #{days_between_dates(@checkin_date,@checkout_date)} night(s)
+      %h6 Total price for this package: #{format_room_price(suggested_reservation_price(@checkin_date,@checkout_date,@rooms_recommanded,@price_modifiers,@weekend_price))}$
+      =link_to "Reservate these rooms", '#', class: "btn btn-small btn-primary"
       %hr
-    %h6 Reservation for #{days_between_dates(@checkin_date,@checkout_date)} night(s)
-    %h6 Total price for this package: #{format_room_price(suggested_reservation_price(@checkin_date,@checkout_date,@rooms_recommanded,@price_modifiers,@weekend_price))}$
-    =link_to "Reservate these rooms", '#', class: "btn btn-small btn-primary"
-    %hr
   %br
   %h5 If this package doesn't fit you, here are the rooms available based on the chosen dates, room type and view wanted
   %br

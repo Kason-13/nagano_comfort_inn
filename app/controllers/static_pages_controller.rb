@@ -1,6 +1,6 @@
 require 'pry'
 class StaticPagesController < ApplicationController
-  before_filter :admin_only_action
+  before_filter :admin_only_action, only: [:admin_pannel]
   def home
     @room_types = RoomType.all
     @view_types = ViewType.all

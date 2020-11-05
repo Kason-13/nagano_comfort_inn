@@ -15,33 +15,49 @@ class RoomReservationsController < ApplicationController
   end
 
   def new
-    @room_id = params[:id]
-    @room = Room.find_by_id(@room_id)
-    @room_type = RoomType.where("id = (?)",@room.room_type_id).first
-    @view_type = ViewType.where("id = (?)",@room.view_type_id).first
+    @room_ids = params[:ids].split(',')
+
+    @rooms = Room.where("id IN (?)",@room_ids)
+    @checkin_date = params[:checkin_date]
+    @checkout_date = params[:checkout_date]
+    @price_modifiers = PriceModifier.where("id IN (?)",
+                                            ReservationDate.where(["date BETWEEN ? AND ?",@checkin_date,@checkout_date]).pluck(:price_modifier_id))
+                                            .pluck(:price)
+    @weekend_price = WeekendPrice.first.price
+    @room_types = RoomType.where("id IN (?)",@rooms.pluck(:room_type_id))
+    @view_types = ViewType.where("id IN (?)",@rooms.pluck(:view_type_id))
   end
 
   def create
-    if(params[:checkin_date].empty? || params[:checkout_date].empty?)
-      #currently not functioning properly, idk why
-    end
-
     checkin_date = Date.parse(params[:checkin_date])
     checkout_date = Date.parse(params[:checkout_date])
+    room_ids = params[:ids].split(',')
+
     #retrieve clients infos
     client = current_client
 
+    #create room reservation of customer
     reservation = create_reservation_id(client.id)
 
-    (checkin_date..checkout_date).each do |day|
-      make_reservation(day, reservation.id, params[:id])
+    room_ids.each do |id|
+      (checkin_date..checkout_date).each do |day|
+        if(checkout_date == day)
+          break
+        end
+        make_reservation(day, reservation.id, id)
+      end
     end
 
     redirect_to '/reservation_summary/'+reservation.id.to_s
   end
 
   def reservation_summary
-    @reservations = RoomReservation.where("reservation_id = (?)",params[:id])
+    room_ids = RoomReservation.where("reservation_id = (?)",params[:id]).pluck(:room_id).uniq
+    @reservations = []
+    room_ids.each do |id|
+      @reservations.push(RoomReservation.where("reservation_id = (?) AND room_id = (?)",params[:id],id))
+    end
+    #binding.pry
     @client = Client.find_by_id(Reservation.find_by_id(params[:id]).client_id)
   end
 

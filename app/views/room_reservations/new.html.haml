@@ -1,10 +1,13 @@
 =provide(:title,'New reservation')
 .form-group
-  %h5 summary of room:
-  =render 'room_summary'
+  %h5 summary of room(s):
+  -@rooms.each do |room|
+    =render 'room_summary',room: room
+    %hr
+    %br
+  %h5 for #{days_between_dates(@checkin_date,@checkout_date)} night(s) stay ( check-in: #{@checkin_date} | check-out: #{@checkout_date} )
+  %h5 Total #{format_room_price(suggested_reservation_price(@checkin_date,@checkout_date,@rooms,@price_modifiers,@weekend_price))}$
   .row
     .section.mx-auto
-      =form_tag('/room_reservation/new/'+@room_id, :method => "post") do
-        -# =render 'fields'
-        =render '/reservation_dates/datepickers'
+      =form_tag('/room_reservation/new/'+create_CSV_room_list(@rooms)+'/'+@checkin_date+'/'+@checkout_date, :method => "post") do
         %input(type="submit" value="reservate!")

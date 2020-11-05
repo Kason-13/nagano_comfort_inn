@@ -1,4 +1,5 @@
 require 'date'
+require 'pry'
 module RoomDisplayHelper
   def display_availability(availability_in_bool)
     availability_str = " is currently "
@@ -17,6 +18,10 @@ module RoomDisplayHelper
     end
   end
 
+  def format_checkout_date(date)
+    date+1
+  end
+
   #returns the number of days between two dates
   def days_between_dates(date1,date2)
     (Date.parse(date2)-Date.parse(date1)).to_i
@@ -26,6 +31,9 @@ module RoomDisplayHelper
   def calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
     total = 0
     (Date.parse(from_date)..Date.parse(to_date)).each do |day|
+      if day == Date.parse(to_date)
+        break
+      end
       total += room.view_type.price
       total += room.room_type.price
       parsed_day = day.to_date
@@ -48,6 +56,15 @@ module RoomDisplayHelper
       total += calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
     end
     total
+  end
+
+  #create list of rooms for multiple rooms reservations (suggested rooms package)
+  def create_CSV_room_list(rooms)
+    rooms_ls = []
+    rooms.each do |room|
+      rooms_ls.push(room.id)
+    end
+    rooms_ls.join(',')
   end
 
 end

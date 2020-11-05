@@ -12,8 +12,8 @@ NaganoComfortInn::Application.routes.draw do
     get '/room_reservations' => 'room_reservations#index'
   end
 
-  get '/room_reservation/new/:id' => 'room_reservations#new'
-  post '/room_reservation/new/:id' => 'room_reservations#create'
+  get '/room_reservation/new/:ids/:checkin_date/:checkout_date' => 'room_reservations#new'
+  post '/room_reservation/new/:ids/:checkin_date/:checkout_date' => 'room_reservations#create'
   get '/my_reservations' => 'room_reservations#my_reservations'
   get '/reservation_summary/:id' => 'room_reservations#reservation_summary'
 

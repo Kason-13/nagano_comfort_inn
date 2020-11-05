@@ -15,7 +15,7 @@
         %hr
       %h6 Reservation for #{days_between_dates(@checkin_date,@checkout_date)} night(s)
       %h6 Total price for this package: #{format_room_price(suggested_reservation_price(@checkin_date,@checkout_date,@rooms_recommanded,@price_modifiers,@weekend_price))}$
-      =link_to "Reservate these rooms", '#', class: "btn btn-small btn-primary"
+      =link_to "Reservate these rooms", '/room_reservation/new/'+create_CSV_room_list(@rooms_recommanded)+'/'+@checkin_date+'/'+@checkout_date, class: "btn btn-small btn-primary"
       %hr
   %br
   %h5 If this package doesn't fit you, here are the rooms available based on the chosen dates, room type and view wanted

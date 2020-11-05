@@ -3,12 +3,13 @@
   .row
     .col-md
       .center-form
-        %h4 Summary of reservation
+        %h4 Summary of reservations
+        %h5 For #{@reservations.length} room(s)
         %h6.styled-listing Reservated by: #{@client.name}
         %h6.styled-listing Client email: #{@client.email}
-        %h6.styled-listing Checkin-date: #{@reservations.first.first.reservation_date.date}
-        %h6.styled-listing Checkout-date: #{format_checkout_date(@reservations.first.last.reservation_date.date)}
-        %h6.styled-listing Total price for #{night_counts(@reservations.first)} nights: #{total_price(@reservations[0])}$
+        %h6.styled-listing Checkin-date: #{@reservations.first.first.from_date.date}
+        %h6.styled-listing Checkout-date: #{format_checkout_date(@reservations.first.first.to_date.date)}
+        %h6.styled-listing Total price for #{night_counts(@reservations.first)} night(s): #{total_price(@reservations)}$
         %button.btn.btn-primary(aria-controls="collapseSummary" aria-expended="false" data-target="#collapseSummary" data-toggle="collapse" type="button")
           Toggle price breakdown
         %button.btn.btn-success
@@ -17,8 +18,7 @@
           .center-form
             -for index in 0..@reservations.length()-1
               %ul
-                %h6 Room ##{@reservations[index].first.room.room_num}
-                -@reservations[index].each do |reservation_day|
-                  %li.styled-listing
-                    %h6 Reservated date: #{reservation_day.reservation_date.date}
-                    %h6 Price for the night: #{reservation_day.price}$
+                %li.styled-listing
+                  %h6 Room ##{@reservations[index].first.room.room_num}
+                  %h6 Reservated dates: #{@reservations[index].first.from_date.date} - #{@reservations[index].first.to_date.date}
+                  %h6 Price: #{format_room_price(@reservations[index].first.price)}$

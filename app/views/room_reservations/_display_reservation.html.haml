@@ -1,8 +1,8 @@
 %li.styled-listing.add-bottom-border
   %h6
-    Client name: #{reservation[0].reservation.client.name}
+    Client name: #{reservation.reservation.client.name}
   %h6
-    Date reservated: #{reservation[0].reservation_date.date} to #{format_checkout_date(reservation[1].reservation_date.date)}
+    Date reservated: #{reservation.from_date.date} to #{format_checkout_date(reservation.to_date.date)}
   %h6
-    Room #: #{reservation[0].room.room_num}
-  =link_to 'More details','/reservation_summary/'+reservation[0].reservation.id.to_s
+    Room #: #{reservation.room.room_num}
+  =link_to 'More details on the reservation','/reservation_summary/'+reservation.reservation.id.to_s

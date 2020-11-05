@@ -13,7 +13,7 @@
 class RoomType < ActiveRecord::Base
   attr_accessible :room, :price
 
-  has_many :room_reservations
+  has_many :rooms
 
   validates(:room, presence: true)
   validates(:price, presence: true)

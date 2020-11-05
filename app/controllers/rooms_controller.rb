@@ -23,7 +23,7 @@ class RoomsController < ApplicationController
                             rooms_unavailable_ids, room_type_id, view_type_id,number_of_guess)
 
     #list of room that responds to criterias
-    optimal_ls = return_optimal_room_choices(number_of_rooms,number_of_guess,rooms_recommandations)
+    optimal_ls = return_optimal_room_choices(number_of_rooms.to_i,number_of_guess.to_i,rooms_recommandations)
 
     @rooms_recommanded = []
     optimal_ls.each do |room_index|
@@ -58,12 +58,12 @@ class RoomsController < ApplicationController
     #params checkin and checkout dates
     def retrieve_unavailable_room_ids(checkin_date,checkout_date)
       # fetch records of dates that are between the checkin and checkout date
-      dates_booked_ids = ReservationDate.where(["date BETWEEN ? AND ?",checkin_date,checkout_date]).pluck(:id) # problem here
+      dates_ids = ReservationDate.where(["date BETWEEN ? AND ?",checkin_date,checkout_date]).pluck(:id)
       #for some reason, it won't work if list is empty
-      dates_booked_ids.push(0)
+      dates_ids.push(0)
 
       # fetch the rooms that are gonna be unavailable using the dates_booked_ids
-      Room.joins(:room_reservations).where("reservation_date_id IN (?)",dates_booked_ids).pluck(:id)
+      Room.joins(:room_reservations).where("(from_date_id IN (?)) or to_date_id IN (?)",dates_ids,dates_ids).pluck(:id)
     end
 
     #method that returns a list of index for room recommanded based on the client's criterias

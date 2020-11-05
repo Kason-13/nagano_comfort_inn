@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201105103249) do
+ActiveRecord::Schema.define(:version => 20201105225000) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20201105103249) do
 
   create_table "reservation_dates", :force => true do |t|
     t.date     "date"
-    t.boolean  "weekend"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "price_modifier_id"
@@ -53,17 +52,19 @@ ActiveRecord::Schema.define(:version => 20201105103249) do
   add_index "reservations", ["client_id"], :name => "index_reservations_on_client_id"
 
   create_table "room_reservations", :force => true do |t|
-    t.integer  "reservation_date_id"
     t.integer  "room_id"
     t.decimal  "price"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "reservation_id"
+    t.integer  "from_date_id"
+    t.integer  "to_date_id"
   end
 
-  add_index "room_reservations", ["reservation_date_id"], :name => "index_room_reservations_on_date_id"
+  add_index "room_reservations", ["from_date_id"], :name => "index_room_reservations_on_from_date_id"
   add_index "room_reservations", ["reservation_id"], :name => "index_room_reservations_on_reservation_id"
   add_index "room_reservations", ["room_id"], :name => "index_room_reservations_on_room_id"
+  add_index "room_reservations", ["to_date_id"], :name => "index_room_reservations_on_to_date_id"
 
   create_table "room_types", :force => true do |t|
     t.string   "room"

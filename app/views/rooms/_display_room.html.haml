@@ -11,3 +11,4 @@
         =link_to 'Make a reservation!', '/room_reservation/new/'+room.id.to_s+'/'+@checkin_date+'/'+@checkout_date
     -if(is_admin?)
       =link_to 'Edit room', edit_admin_room_path(room)
+      =link_to 'Delete the room', admin_room_path(room), method: :delete, data: {confirm: "Delete room #"+room.room_num.to_s+"?"},class:"mx-2"

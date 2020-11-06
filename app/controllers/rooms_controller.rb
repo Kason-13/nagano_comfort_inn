@@ -10,14 +10,11 @@ class RoomsController < ApplicationController
     number_of_rooms = params[:number_of_rooms]
 
     if(@checkin_date.empty? || @checkout_date.empty? || number_of_guess.empty? || number_of_rooms.empty?)
-      flash[:error] = "fields for search cannot be empty"
-      return redirect_to root_path
+      return error_redirect("fields for search cannot be empty",root_path)
     elsif(Date.parse(@checkin_date)>Date.parse(@checkout_date))
-      flash[:error] = "Range for dates are not valid for search/reservations"
-      return redirect_to root_path
+      return error_redirect("Range for dates are not valid for search/reservations",root_path)
     elsif(number_of_rooms > number_of_guess)
-      flash[:error] = "Number of rooms shouldn't be higher than the number of guess"
-      return redirect_to root_path
+      return error_redirect("Number of rooms shouldn't be higher than the number of guess",root_path)
     end
 
     rooms_unavailable_ids = retrieve_unavailable_room_ids(@checkin_date,@checkout_date)
@@ -25,20 +22,20 @@ class RoomsController < ApplicationController
     rooms_unavailable_ids.push(0)
 
     #retrieve rooms that are available and paginate
-    @rooms = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
-                        rooms_unavailable_ids, room_type_id, view_type_id)
+    @rooms = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?) AND deleted IS (?)",
+                        rooms_unavailable_ids, room_type_id, view_type_id, false)
                         .paginate(page: params[:page], per_page:5)
 
     #list used for optimal room choices
-    rooms_recommandations = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
-                            rooms_unavailable_ids, room_type_id, view_type_id)
+    rooms_list = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?) AND deleted IS (?)",
+                            rooms_unavailable_ids, room_type_id, view_type_id,false)
 
     #list of room that responds to criterias
-    optimal_ls = return_optimal_room_choices(number_of_rooms.to_i,number_of_guess.to_i,rooms_recommandations)
+    optimal_ls = return_optimal_room_choices(number_of_rooms.to_i,number_of_guess.to_i,rooms_list)
 
     @rooms_recommanded = []
     optimal_ls.each do |room_index|
-      @rooms_recommanded.push(rooms_recommandations[room_index])
+      @rooms_recommanded.push(rooms_list[room_index])
     end
 
     price_modifiers_ids = ReservationDate.where(["date BETWEEN ? AND ?",@checkin_date,@checkout_date]).pluck(:price_modifier_id)
@@ -58,7 +55,7 @@ class RoomsController < ApplicationController
   end
 
   def index
-    @rooms = Room.paginate(page: params[:page], per_page:5)
+    @rooms = Room.where("deleted IS (?)",false).paginate(page: params[:page], per_page:5)
     @room_types = RoomType.all
     @view_types = ViewType.all
   end
@@ -68,13 +65,13 @@ class RoomsController < ApplicationController
     #method that returns a list of unavailable room ids list
     #params checkin and checkout dates
     def retrieve_unavailable_room_ids(checkin_date,checkout_date)
-      # fetch records of dates that are between the checkin and checkout date
-      dates_ids = ReservationDate.where(["date BETWEEN ? AND ?",checkin_date,checkout_date]).pluck(:id)
-      #for some reason, it won't work if list is empty
-      dates_ids.push(0)
-
-      # fetch the rooms that are gonna be unavailable using the dates_booked_ids
-      Room.joins(:room_reservations).where("(from_date_id IN (?)) or to_date_id IN (?)",dates_ids,dates_ids).pluck(:id)
+      #fetch room ids that are already reservated between checkin and checkout date
+      room_ids = RoomReservation.joins('JOIN reservation_dates AS from_dates ON room_reservations.from_date_id = from_dates.id').
+                                 joins('JOIN reservation_dates AS to_dates ON room_reservations.to_date_id = to_dates.id').
+                                 where('(?) BETWEEN from_dates.date AND to_dates.date OR (?) BETWEEN from_dates.date AND to_dates.date', checkin_date,checkout_date).
+                                 pluck(:room_id)
+      # to remove duplicates
+      room_ids.uniq
     end
 
     #method that returns a list of index for room recommanded based on the client's criterias
@@ -83,6 +80,9 @@ class RoomsController < ApplicationController
       rooms_of = number_of_guess/number_of_rooms
       extra = number_of_guess%rooms_of
       rooms_capacities = rooms.pluck(:num_of_guess)
+      if rooms_capacities.empty?
+        return []
+      end
       optimal_rooms = []
 
       # if an extra room is necessary

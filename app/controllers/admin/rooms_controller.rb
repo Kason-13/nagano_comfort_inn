@@ -23,6 +23,7 @@ class Admin::RoomsController < Admin::BaseController
   def create
     @room = Room.new(params[:room])
     if(@room.save)
+      flash[:success] = "Created new room"
       redirect_to rooms_path
     else
       @view_types_ls = create_viewType_list
@@ -39,6 +40,11 @@ class Admin::RoomsController < Admin::BaseController
 
 
   def destroy
+    room_id = params[:id]
+    room = Room.find_by_id(room_id)
+    room.deleted = true
+    room.save!
+    redirect_to rooms_path
   end
 
   private

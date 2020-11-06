@@ -18,6 +18,10 @@
   flex-direction: column;
   align-items: center;
 }
+.dir-row{
+  display: flex;
+  flex-direction: row;
+}
 .flex-col *{
   margin-bottom: 2em;
 }
@@ -83,6 +87,10 @@ form{
 }
 .sm-width{
   width:30%;
+}
+
+.lg-width{
+  width:80%;
 }
 
 

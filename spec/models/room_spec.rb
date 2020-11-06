@@ -16,14 +16,13 @@ require 'spec_helper'
 
 describe Room do
   before do
-    @room = Room.new(room_num: 1,num_of_guess:2, status: true,room_type_id:1,view_type_id:1)
+    @room = Room.new(room_num: 1,num_of_guess:2, deleted: false,room_type_id:1,view_type_id:1)
     @room.save!
   end
 
   subject { @room }
 
   it { should respond_to(:room_num) }
-  it { should respond_to(:status) }
 
   it {should be_valid}
 

@@ -3,6 +3,8 @@ require 'will_paginate/array'
 class RoomReservationsController < ApplicationController
   before_filter :signed_in_client, only: [:new,:create,:client_reservations]
 
+  CHECKOUT_DATE_OFFSET = 1
+
   def my_reservations
     reservation_ids = Reservation.where("client_id = (?)",current_client.id)
     @reservations = RoomReservation.where("reservation_id IN (?)", reservation_ids)
@@ -15,6 +17,7 @@ class RoomReservationsController < ApplicationController
     @rooms = Room.where("id IN (?)",@room_ids)
     @checkin_date = params[:checkin_date]
     @checkout_date = params[:checkout_date]
+
     @price_modifiers = PriceModifier.where("id IN (?)",
                                             ReservationDate.where(["date BETWEEN ? AND ?",@checkin_date,@checkout_date]).pluck(:price_modifier_id))
                                             .pluck(:price)
@@ -29,6 +32,14 @@ class RoomReservationsController < ApplicationController
     checkout_date = Date.parse(params[:checkout_date])
     room_ids = params[:ids].split(',')
 
+    #checks if the rooms are avaiable for reservations,in case of user changing parameters
+    room_ids.each do |room_id|
+      if(!eval_reservation_request(checkin_date,checkout_date,room_id.to_i))
+        flash[:error] = "one or more room isn't available at these dates"
+        return redirect_to root_path
+      end
+    end
+
     #retrieve clients infos
     client = current_client
 
@@ -36,9 +47,8 @@ class RoomReservationsController < ApplicationController
     reservation = create_reservation_id(client.id)
 
     room_ids.each do |id|
-      make_reservation(checkin_date, checkout_date-1, reservation.id, id)
+      make_reservation(checkin_date, checkout_date-CHECKOUT_DATE_OFFSET, reservation.id, id)
     end
-
     redirect_to '/reservation_summary/'+reservation.id.to_s
   end
 
@@ -52,7 +62,21 @@ class RoomReservationsController < ApplicationController
   end
 
   private
+    #method to verify if room is already reservated for date range
+    #returns true or false
+    def eval_reservation_request(checkin_date,checkout_date,room_id)
+      reserv_eval = false
+      unavailable_rooms_ids = RoomReservation.joins('JOIN reservation_dates AS from_dates ON room_reservations.from_date_id = from_dates.id').
+                                 joins('JOIN reservation_dates AS to_dates ON room_reservations.to_date_id = to_dates.id').
+                                 where('(?) BETWEEN from_dates.date AND to_dates.date OR (?) BETWEEN from_dates.date AND to_dates.date', checkin_date,checkout_date).
+                                 pluck(:room_id)
+      if(!unavailable_rooms_ids.include?(room_id))
+        reserv_eval = true
+      end
+      reserv_eval
+    end
 
+    #creates a reservation id in the DB and returns it
     def create_reservation_id(client_id)
       new_reservation_id = Reservation.new(client_id:client_id)
       new_reservation_id.save!
@@ -76,6 +100,7 @@ class RoomReservationsController < ApplicationController
         #checks and creates the date if needed
         check_reservation_dates_exist(day)
         reservation_date = ReservationDate.where(:date => day).first
+        #for price of reservation
         price += calc_price(reservation_date,room_id)
       end
       new_room_reservation = RoomReservation.new(from_date_id:ReservationDate.where(:date => from_date).first.id,
@@ -87,9 +112,9 @@ class RoomReservationsController < ApplicationController
       if(!new_room_reservation.save!)
         render 'new'
       end
-
     end
 
+    #method to calculate the price for the night
     def calc_price(date_infos, room_id)
       price = 0
       if(date_infos.date.saturday? || date_infos.date.sunday?)

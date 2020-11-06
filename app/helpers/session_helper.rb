@@ -1,5 +1,10 @@
 require 'pry'
 module SessionHelper
+  #method to define the error message and redirect to a path
+  def error_redirect(error_message, path)
+    flash[:error] = error_message
+    redirect_to path
+  end
 
   #############################    user   ############################
   def sign_in(client)

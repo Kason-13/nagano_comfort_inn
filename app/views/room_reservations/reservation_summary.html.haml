@@ -20,5 +20,7 @@
               %ul
                 %li.styled-listing
                   %h6 Room ##{@reservations[index].first.room.room_num}
+                  %h6 #{@reservations[index].first.room.view_type.view} view
+                  %h6 #{@reservations[index].first.room.room_type.room} room
                   %h6 Reservated dates: #{@reservations[index].first.from_date.date} - #{@reservations[index].first.to_date.date}
                   %h6 Price: #{format_room_price(@reservations[index].first.price)}$

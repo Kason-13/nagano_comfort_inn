@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201106054829) do
+ActiveRecord::Schema.define(:version => 20201106163933) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(:version => 20201106054829) do
     t.integer  "from_date_id"
     t.integer  "to_date_id"
     t.decimal  "weekend_price"
-    t.decimal  "price_modifier"
   end
 
   add_index "room_reservations", ["from_date_id"], :name => "index_room_reservations_on_from_date_id"
@@ -79,12 +78,12 @@ ActiveRecord::Schema.define(:version => 20201106054829) do
 
   create_table "rooms", :force => true do |t|
     t.integer  "room_num"
-    t.boolean  "status"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "room_type_id"
     t.integer  "view_type_id"
     t.integer  "num_of_guess"
+    t.boolean  "deleted"
   end
 
   add_index "rooms", ["room_type_id"], :name => "index_rooms_on_room_type_id"

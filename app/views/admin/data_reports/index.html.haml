@@ -1,0 +1,20 @@
+-require 'date'
+=provide(:title,'Stats reports')
+%h5.listing-header Stats reports
+%h6.listing-header Generated date: #{Date.today}
+.container
+  .row
+    .col-md
+      %h5.listing-header
+        Occupation rate
+    .col-md
+      %h5.listing-header
+        Revenu
+    .col-md
+      %h5.listing-header
+        Rooms to clean today
+      .center-form
+        %ul
+        -@rooms_to_clean.each do |room|
+          %li
+            .cleaning_room_number room ##{room.room.room_num}

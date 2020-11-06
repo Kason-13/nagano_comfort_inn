@@ -7,7 +7,6 @@ describe ReservationDate do
   subject{reservation_date}
 
   it { should respond_to(:date) }
-  it { should respond_to(:weekend) }
   it { should respond_to(:price_modifier_id) }
 
   it { should be_valid }

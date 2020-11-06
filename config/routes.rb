@@ -9,6 +9,7 @@ NaganoComfortInn::Application.routes.draw do
     resources :rooms, only: [:new,:create,:destroy,:edit,:update]
     resources :price_modifiers
     resources :weekend_prices, only: [:edit,:update]
+    resources :data_reports, only: [:index]
     get '/room_reservations' => 'room_reservations#index'
   end
 

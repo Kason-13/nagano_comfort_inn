@@ -3,7 +3,6 @@
 FactoryGirl.define do
   factory :reservation_date do
     date "2020-10-23"
-    weekend false
     price_modifier_id 1
   end
 end

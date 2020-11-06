@@ -7,6 +7,9 @@
     .col-md
       %h5.listing-header
         Occupation rate
+      %h6.occupation_rate #{@occupied_rooms.length} room(s) occupied out of #{@number_of_rooms} available
+      %h6.listing-header Rooms currently occupied
+      %h6.listing-header [#{display_occupied_rooms_numbers(@occupied_rooms)}]
     .col-md
       %h5.listing-header
         Revenu

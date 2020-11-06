@@ -19,9 +19,9 @@ class RoomsController < ApplicationController
                         .paginate(page: params[:page], per_page:5)
 
     #list used for optimal room choices
-    rooms_recommandations = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?) AND num_of_guess <= (?)",
-                            rooms_unavailable_ids, room_type_id, view_type_id,number_of_guess)
-
+    rooms_recommandations = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
+                            rooms_unavailable_ids, room_type_id, view_type_id)
+                            
     #list of room that responds to criterias
     optimal_ls = return_optimal_room_choices(number_of_rooms.to_i,number_of_guess.to_i,rooms_recommandations)
 

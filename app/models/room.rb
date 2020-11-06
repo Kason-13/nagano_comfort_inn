@@ -20,7 +20,7 @@ class Room < ActiveRecord::Base
   belongs_to :view_type
   has_many :room_reservations
 
-  before_save :set_deleted
+  before_create :set_deleted
 
   # to make verify those criteria upon saves/updates
   validates(:room_num, presence:true)

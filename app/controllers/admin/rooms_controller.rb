@@ -43,7 +43,8 @@ class Admin::RoomsController < Admin::BaseController
     room_id = params[:id]
     room = Room.find_by_id(room_id)
     room.deleted = true
-    room.save!
+    binding.pry
+    room.save
     redirect_to rooms_path
   end
 

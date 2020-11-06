@@ -3,24 +3,21 @@
     %h5.listing-header Search rooms by needs!
     =form_tag('/search', :method =>"get") do
       .center-form
-        %br
-        Room's view?:
-        %select#viewtype(name="view_type_selected")
-          -@view_types.each do |view|
-            %option#selectView(value = "#{view.id}") #{view.view}
-        %br
-        Type of room?:
-        %select#roomtype(name="room_type_selected")
-          -@room_types.each do |room|
-            %option#selectRoom(value = "#{room.id}") #{room.room}
-        %br
-        Number of guess?:
-        %input#numberOfGuess(name = "number_of_guess" type="number")
-        %br
-        Number of rooms?:
-        %input#numberOfRooms(name = "number_of_rooms" type="number")
-        %br
-        .datepicker-group
-          =render '/reservation_dates/datepickers'
-          %br
-          %input(type="submit" value="Search!")
+        .search_container
+          .view_room_settings
+            Room's view?:
+            %select#viewtype(name="view_type_selected")
+              -@view_types.each do |view|
+                %option#selectView(value = "#{view.id}") #{view.view}
+            Type of room?:
+            %select#roomtype(name="room_type_selected")
+              -@room_types.each do |room|
+                %option#selectRoom(value = "#{room.id}") #{room.room}
+          .number_guess_rooms
+            Number of guess?:
+            %input#numberOfGuess(name = "number_of_guess" type="number")
+            Number of rooms?:
+            %input#numberOfRooms(name = "number_of_rooms" type="number")
+          .datepicker-group
+            =render '/reservation_dates/datepickers'
+        %input(type="submit" value="Search!")

@@ -1,7 +1,7 @@
-%label(for="checkin_date") check-in date:
+check-in date:
 %input#checkin(name="checkin_date" type="date")
 %br
-%label(for="checkout_date") check-out date:
+check-out date:
 %input#checkout(name="checkout_date" type="date")
 :javascript
   var today = new Date().toISOString().split('T')[0];

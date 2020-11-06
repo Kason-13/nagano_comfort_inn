@@ -13,6 +13,7 @@
 }
 
 /* layout formatting */
+
 .flex-col{
   display: flex;
   flex-direction: column;
@@ -50,9 +51,29 @@
   padding: 1em;
 }
 
-// .add-bottom-border:last-of-type{
-//   border-bottom: 0
-// }
+/* room list formatting*/
+.room-list{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/*pagination module*/
+.pagination ul{
+  width: 50%;
+  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style:none;
+}
+
+/*search container*/
+.search_container{
+  display: flex;
+  flex-direction: row;
+}
 
 /*jumbotron*/
 .jumbotron{

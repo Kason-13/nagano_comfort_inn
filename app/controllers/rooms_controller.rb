@@ -55,7 +55,7 @@ class RoomsController < ApplicationController
   end
 
   def index
-    @rooms = Room.where("deleted IS (?)",false).paginate(page: params[:page], per_page:5)
+    @rooms = Room.where("deleted IS (?)",false).paginate(page: params[:page], per_page:8)
     @room_types = RoomType.all
     @view_types = ViewType.all
   end

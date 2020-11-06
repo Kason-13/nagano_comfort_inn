@@ -14,18 +14,25 @@ class Admin::PriceModifiersController < Admin::BaseController
   end
 
   def create
+    if(params[:from_date].empty? || params[:to_date].empty?)
+      flash.now[:error] = "DATES CANNOT BE EMPTY"
+      @price_modifier = PriceModifier.new
+      return render 'new'
+    end
+
     from_date = Date.parse(params[:from_date])
     to_date = Date.parse(params[:to_date])
 
     @price_modifier = PriceModifier.new(params[:price_modifier])
-    if(!@price_modifier.save!)
+    if(@price_modifier.save)
+      (from_date..to_date).each do |day|
+        add_modifier_date(day,@price_modifier.id)
+      end
+      flash[:success] = "Price modifier created"
+      redirect_to admin_price_modifiers_path
+    else
       render 'new'
     end
-
-    (from_date..to_date).each do |day|
-      add_modifier_date(day,@price_modifier.id)
-    end
-    redirect_to admin_price_modifiers_path
   end
 
   def update
@@ -33,6 +40,8 @@ class Admin::PriceModifiersController < Admin::BaseController
       flash[:success] = "Price has been modified"
       redirect_to admin_price_modifiers_path
     else
+      @price_modifier = PriceModifier.find_by_id(params[:id])
+      flash.now[:error] = "invalid infos for modification"
       render 'edit'
     end
   end

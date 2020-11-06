@@ -9,8 +9,10 @@ class Admin::ViewTypesController < Admin::BaseController
     @view_type = ViewType.new(params[:view_type])
     if(@view_type.save)
       flash[:success] = "View type has been saved into the available choices"
+      redirect_to admin_view_types_path
+    else
+      render 'new'
     end
-    redirect_to admin_view_types_path
   end
 
   def edit
@@ -22,6 +24,8 @@ class Admin::ViewTypesController < Admin::BaseController
       flash[:success] = "Updated informations for the view type"
       redirect_to admin_view_types_path
     else
+      @view_type = ViewType.find_by_id(params[:id])
+      flash.now[:error] = "One or more aspect of the form isn't conform"
       render 'edit'
     end
   end

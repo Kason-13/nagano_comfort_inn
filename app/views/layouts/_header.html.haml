@@ -14,6 +14,8 @@
           = link_to "Admin mode", admin_mode_path
         %li.nav-item.mx-2
           = link_to "Sign in", signin_path
+        %li.nav-item.mx-2
+          = link_to "Signup", new_client_path
       -if is_admin?
         %li.nav-item.mx-2
           = link_to "Admin pannel", admin_pannel_path

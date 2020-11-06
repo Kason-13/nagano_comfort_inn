@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201105225000) do
+ActiveRecord::Schema.define(:version => 20201106054829) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20201105225000) do
     t.integer  "reservation_id"
     t.integer  "from_date_id"
     t.integer  "to_date_id"
+    t.decimal  "weekend_price"
+    t.decimal  "price_modifier"
   end
 
   add_index "room_reservations", ["from_date_id"], :name => "index_room_reservations_on_from_date_id"

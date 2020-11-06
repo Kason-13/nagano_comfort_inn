@@ -12,6 +12,10 @@ class Admin::RoomsController < Admin::BaseController
       flash[:success] = "Updated room listing"
       redirect_to rooms_path
     else
+      flash.now[:error] = "Invalid informations, room number might be already taken"
+      @room = Room.find_by_id(params[:id])
+      @view_types_ls = create_viewType_list
+      @room_types_ls = create_roomType_list
       render 'edit'
     end
   end
@@ -21,6 +25,8 @@ class Admin::RoomsController < Admin::BaseController
     if(@room.save)
       redirect_to rooms_path
     else
+      @view_types_ls = create_viewType_list
+      @room_types_ls = create_roomType_list
       render 'new'
     end
   end

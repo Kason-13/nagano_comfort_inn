@@ -12,6 +12,8 @@ class Admin::WeekendPricesController < Admin::BaseController
       flash[:success] = "New weekend top up price saved!"
       redirect_to admin_price_modifiers_path
     else
+      @weekend_price = WeekendPrice.first
+      flash.now[:error] = "One of the field isn't conform"
       render 'edit'
     end
   end

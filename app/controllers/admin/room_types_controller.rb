@@ -5,8 +5,10 @@ class Admin::RoomTypesController < Admin::BaseController
     @room_type = RoomType.new(params[:room_type])
     if(@room_type.save)
       flash[:success] = "Room type has been saved into the available choices"
+      redirect_to admin_room_types_path
+    else
+      render 'new'
     end
-    redirect_to admin_room_types_path
   end
 
   def index
@@ -26,6 +28,8 @@ class Admin::RoomTypesController < Admin::BaseController
       flash[:success] = "Updated informations for the view type"
       redirect_to admin_room_types_path
     else
+      @room_type = RoomType.find_by_id(params[:id])
+      flash.now[:error] = "One or more aspect of the form isn't conform"
       render 'edit'
     end
   end

@@ -21,7 +21,7 @@ class Room < ActiveRecord::Base
   has_many :room_reservations
 
   # to make verify those criteria upon saves/updates
-  validates(:room_num, presence:true)
+  validates(:room_num, presence:true, uniqueness: true)
   validates(:room_type_id, presence:true)
   validates(:num_of_guess, presence:true)
   validates(:view_type_id,presence:true)

@@ -14,14 +14,19 @@ class Admin::DataReportsController < Admin::BaseController
     end
     @rooms_to_clean = RoomReservation.where("to_date_id = (?)",today_date_id)
 
-    @occupied_rooms = []
+    @occupied_rooms_reservations = []
+
+    # @occupied_rooms = RoomReservation.joins('reservation_dates AS from_dates ON room_reservations.from_date_id = from_dates.id').
+    #                                   joins('reservation_dates AS to_dates ON room_reservations.to_date_id = to_dates.id').
+    #                                   where('(?) BETWEEN from_dates.date AND to_dates.date',search_date)
+
     search_date = today_date.to_s(:db)
     RoomReservation.all.each do |reservation|
       if(Date.parse(search_date) >= reservation.from_date.date && Date.parse(search_date) <= reservation.to_date.date)
-        @occupied_rooms.push(reservation)
+        @occupied_rooms_reservations.push(reservation)
       end
     end
-    #binding.pry
+
     @number_of_rooms = Room.all.length
   end
 

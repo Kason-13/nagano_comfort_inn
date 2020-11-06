@@ -1,6 +1,6 @@
 =provide(:title, 'New price modifier')
 .row
-  .span6.offset3
+  .center-form.sm-width
     =form_for([:admin,@price_modifier]) do |f|
       =render 'shared/error_messages', object: f.object
       name: #{f.text_field :name}

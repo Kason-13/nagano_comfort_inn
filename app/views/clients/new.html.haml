@@ -1,7 +1,7 @@
 =provide(:title,'Register')
 %h5 registration
 .row
-  .span6.offset3
+  .center-form.sm-width
     =form_for(@client) do |f|
       =render 'shared/error_messages', object:f.object
       =render 'fields', f:f

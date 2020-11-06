@@ -9,6 +9,17 @@ class RoomsController < ApplicationController
     number_of_guess = params[:number_of_guess]
     number_of_rooms = params[:number_of_rooms]
 
+    if(@checkin_date.empty? || @checkout_date.empty? || number_of_guess.empty? || number_of_rooms.empty?)
+      flash[:error] = "fields for search cannot be empty"
+      return redirect_to root_path
+    elsif(Date.parse(@checkin_date)>Date.parse(@checkout_date))
+      flash[:error] = "Range for dates are not valid for search/reservations"
+      return redirect_to root_path
+    elsif(number_of_rooms > number_of_guess)
+      flash[:error] = "Number of rooms shouldn't be higher than the number of guess"
+      return redirect_to root_path
+    end
+
     rooms_unavailable_ids = retrieve_unavailable_room_ids(@checkin_date,@checkout_date)
     #for some reason, it won't work if list is empty
     rooms_unavailable_ids.push(0)
@@ -21,7 +32,7 @@ class RoomsController < ApplicationController
     #list used for optimal room choices
     rooms_recommandations = Room.where("id NOT IN (?) AND room_type_id = (?) AND view_type_id = (?)",
                             rooms_unavailable_ids, room_type_id, view_type_id)
-                            
+
     #list of room that responds to criterias
     optimal_ls = return_optimal_room_choices(number_of_rooms.to_i,number_of_guess.to_i,rooms_recommandations)
 
@@ -68,8 +79,6 @@ class RoomsController < ApplicationController
 
     #method that returns a list of index for room recommanded based on the client's criterias
     def return_optimal_room_choices(number_of_rooms,number_of_guess,rooms)
-      number_of_rooms = number_of_rooms.to_i
-      number_of_guess = number_of_guess.to_i
 
       rooms_of = number_of_guess/number_of_rooms
       extra = number_of_guess%rooms_of

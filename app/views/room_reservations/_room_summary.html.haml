@@ -5,4 +5,4 @@
 %h6
   for #{days_between_dates(@checkin_date,@checkout_date)} night(s) stay ( check-in: #{@checkin_date} | check-out: #{@checkout_date} )
 %h6
-  #{format_room_price(calc_total_price(@checkin_date,@checkout_date,room,@price_modifiers,@weekend_price))}$ for
+  Room price: #{format_room_price(calc_total_price(@checkin_date,@checkout_date,room,@price_modifiers,@weekend_price))}$

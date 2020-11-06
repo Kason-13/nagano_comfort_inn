@@ -1,5 +1,5 @@
 class RoomReservation < ActiveRecord::Base
-  attr_accessible :reservation_id, :from_date_id, :to_date_id, :price, :room_id
+  attr_accessible :reservation_id, :from_date_id, :to_date_id, :price, :room_id, :weekend_price, :price_modifier
 
   belongs_to :from_date, foreign_key: :from_date_id, class_name: ReservationDate
   belongs_to :to_date, foreign_key: :to_date_id, class_name: ReservationDate

@@ -1,6 +1,6 @@
 =provide(:title,"Add room type")
 .row
-  .span6.offset3
+  .center-form.sm-width
     =form_for([:admin,@room_type]) do |f|
       =render 'shared/error_messages', object: f.object
       =render 'fields', f:f

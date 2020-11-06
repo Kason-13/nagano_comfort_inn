@@ -78,12 +78,12 @@ class RoomReservationsController < ApplicationController
         reservation_date = ReservationDate.where(:date => day).first
         price += calc_price(reservation_date,room_id)
       end
-
       new_room_reservation = RoomReservation.new(from_date_id:ReservationDate.where(:date => from_date).first.id,
                                                   to_date_id:ReservationDate.where(:date => to_date).first.id,
                                                   room_id: room_id,
                                                   reservation_id: reservation_id,
-                                                  price: price )
+                                                  price: price,
+                                                  weekend_price: WeekendPrice.first.price )
       if(!new_room_reservation.save!)
         render 'new'
       end

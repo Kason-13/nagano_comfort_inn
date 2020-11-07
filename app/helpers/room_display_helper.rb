@@ -23,12 +23,12 @@ module RoomDisplayHelper
   end
 
   #returns the number of days between two dates
-  def days_between_dates(date1,date2)
+  def display_days_between_dates(date1,date2)
     (Date.parse(date2)-Date.parse(date1)).to_i
   end
 
   #calculate total price to display for chosen dates
-  def calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
+  def display_calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
     total = 0
     (Date.parse(from_date)..Date.parse(to_date)).each do |day|
       if day == Date.parse(to_date)
@@ -50,15 +50,16 @@ module RoomDisplayHelper
   end
 
   #for total price of suggested package
-  def suggested_reservation_price(from_date, to_date, rooms, price_modifiers, weekend_price)
+  def display_suggested_reservation_price(from_date, to_date, rooms, price_modifiers, weekend_price)
     total = 0
     rooms.each do |room|
-      total += calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
+      total += display_calc_total_price(from_date, to_date, room, price_modifiers, weekend_price)
     end
     total
   end
 
   #create list of rooms for multiple rooms reservations (suggested rooms package)
+  #for reservation url
   def create_CSV_room_list(rooms)
     rooms_ls = []
     rooms.each do |room|

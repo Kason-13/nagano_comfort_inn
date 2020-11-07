@@ -42,9 +42,8 @@ class RoomReservationsController < ApplicationController
 
     #retrieve clients infos
     client = current_client
-
     #create room reservation of customer
-    reservation = create_reservation_id(client.id)
+    reservation = create_reservation_id(client.id,params[:demands])
 
     room_ids.each do |id|
       make_reservation(checkin_date, checkout_date-CHECKOUT_DATE_OFFSET, reservation.id, id)
@@ -56,7 +55,7 @@ class RoomReservationsController < ApplicationController
     room_ids = RoomReservation.where("reservation_id = (?)",params[:id]).pluck(:room_id).uniq
     @reservations = []
     room_ids.each do |id|
-      @reservations.push(RoomReservation.where("reservation_id = (?) AND room_id = (?)",params[:id],id))
+      @reservations.push(RoomReservation.where("reservation_id = (?) AND room_id = (?)",params[:id],id)).first
     end
     @client = Client.find_by_id(Reservation.find_by_id(params[:id]).client_id)
   end
@@ -77,10 +76,10 @@ class RoomReservationsController < ApplicationController
     end
 
     #creates a reservation id in the DB and returns it
-    def create_reservation_id(client_id)
-      new_reservation_id = Reservation.new(client_id:client_id)
-      new_reservation_id.save!
-      new_reservation_id
+    def create_reservation_id(client_id,demands)
+      new_reservation = Reservation.new(client_id:client_id,demands:demands)
+      new_reservation.save!
+      new_reservation
     end
 
     # check if date exists in DB, creates it if it doesn't

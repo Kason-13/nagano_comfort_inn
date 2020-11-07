@@ -5,9 +5,11 @@
     =render 'room_summary',room: room
     %hr
     %br
-  %h5 for #{days_between_dates(@checkin_date,@checkout_date)} night(s) stay ( check-in: #{@checkin_date} | check-out: #{@checkout_date} )
-  %h5 Total #{format_room_price(suggested_reservation_price(@checkin_date,@checkout_date,@rooms,@price_modifiers,@weekend_price))}$
+  %h5 for #{display_days_between_dates(@checkin_date,@checkout_date)} night(s) stay ( check-in: #{@checkin_date} | check-out: #{@checkout_date} )
+  %h5 Total #{format_room_price(display_suggested_reservation_price(@checkin_date,@checkout_date,@rooms,@price_modifiers,@weekend_price))}$
   .row
     .section.mx-auto
       =form_tag('/room_reservation/new/'+create_CSV_room_list(@rooms)+'/'+@checkin_date+'/'+@checkout_date, :method => "post") do
+        Particular demands (we'll try our best!)
+        %textarea#demands(rows="4" cols="50" name="demands")
         %input(type="submit" value="reservate!")

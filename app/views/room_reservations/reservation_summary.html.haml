@@ -9,18 +9,23 @@
         %h6.styled-listing Client email: #{@client.email}
         %h6.styled-listing Checkin-date: #{@reservations.first.first.from_date.date}
         %h6.styled-listing Checkout-date: #{format_checkout_date(@reservations.first.first.to_date.date)}
-        %h6.styled-listing Total price for #{night_counts(@reservations.first)} night(s): #{total_price(@reservations)}$
+        %h6.styled-listing Total price for #{display_night_counts(@reservations.first)} night(s): #{display_reservation_total_price(@reservations)}$
+        .particular-demands.add-border
+          %h6.listing-header Particular demands
+          %p #{@reservations.first.first.reservation.demands}
+        %br
         %button.btn.btn-primary(aria-controls="collapseSummary" aria-expended="false" data-target="#collapseSummary" data-toggle="collapse" type="button")
           Toggle price breakdown
         %button.btn.btn-success
           Email the summary
         .collapse#collapseSummary
+          %br
           .center-form
-            -for index in 0..@reservations.length()-1
+            -@reservations.each_with_index do |reservation,index|
               %ul
                 %li.styled-listing
-                  %h6 Room ##{@reservations[index].first.room.room_num}
-                  %h6 #{@reservations[index].first.room.view_type.view} view
-                  %h6 #{@reservations[index].first.room.room_type.room} room
-                  %h6 Reservated dates: #{@reservations[index].first.from_date.date} - #{@reservations[index].first.to_date.date}
-                  %h6 Price: #{format_room_price(@reservations[index].first.price)}$
+                  %h6 Room ##{reservation.first.room.room_num}
+                  %h6 #{reservation.first.room.view_type.view} view
+                  %h6 #{reservation.first.room.room_type.room} room
+                  %h6 Reservated dates: #{reservation.first.from_date.date} - #{reservation.first.to_date.date}
+                  %h6 Price: #{format_room_price(reservation.first.price)}$

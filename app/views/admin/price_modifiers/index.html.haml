@@ -1,6 +1,8 @@
 =provide(:title, 'Price modifiers')
+-# -require 'pry'
 %h5 price modifiers
 .container
+  -# -binding.pry
   .row
     .col-md
       =link_to "Create new price modifier", new_admin_price_modifier_path , class:"btn btn-large btn-primary"
@@ -12,6 +14,8 @@
             name: #{modifier.name}
           %h6
             price: #{modifier.price}$
+          %h6
+            From : #{modifier.from_date} to: #{modifier.to_date}
           = link_to "edit", edit_admin_price_modifier_path(modifier)
           = link_to "delete", admin_price_modifier_path(modifier), method: :delete, data: {confirm: "Delete the price modifier?"} , class:"mx-2"
     .col-md

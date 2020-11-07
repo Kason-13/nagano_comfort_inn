@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201106163933) do
+ActiveRecord::Schema.define(:version => 20201106234500) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -30,7 +30,12 @@ ActiveRecord::Schema.define(:version => 20201106163933) do
     t.decimal  "price"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.date     "from_date"
+    t.date     "to_date"
   end
+
+  add_index "price_modifiers", ["from_date"], :name => "index_price_modifiers_on_from_date"
+  add_index "price_modifiers", ["to_date"], :name => "index_price_modifiers_on_to_date"
 
   create_table "reservation_dates", :force => true do |t|
     t.date     "date"

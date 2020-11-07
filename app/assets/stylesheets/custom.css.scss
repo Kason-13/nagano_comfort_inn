@@ -78,7 +78,7 @@
 /*jumbotron*/
 .jumbotron{
   text-align: center;
-  background-image: url('https://radissonhotels.iceportal.com/image/country-inn-suites-by-radisson-erie-pa/exteriorview/16256-116591-f65039627_3xl.jpg');
+  background-image: url('jumbotron/bg.jpg');
   background-size:cover ;
   background-position: center;
   color:navy;
@@ -99,6 +99,11 @@ footer{
 form{
   display: flex;
   flex-direction: column;
+}
+
+
+textarea{
+  resize: none;
 }
 
 .center-form{

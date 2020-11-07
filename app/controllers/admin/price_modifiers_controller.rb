@@ -23,7 +23,11 @@ class Admin::PriceModifiersController < Admin::BaseController
     from_date = Date.parse(params[:from_date])
     to_date = Date.parse(params[:to_date])
 
-    @price_modifier = PriceModifier.new(params[:price_modifier])
+    @price_modifier = PriceModifier.new(name:params[:price_modifier]["name"],
+                                        price:params[:price_modifier]["price"],
+                                        from_date:params[:from_date],
+                                        to_date:params[:to_date])
+
     if(@price_modifier.save)
       (from_date..to_date).each do |day|
         add_modifier_date(day,@price_modifier.id)

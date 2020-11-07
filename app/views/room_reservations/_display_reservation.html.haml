@@ -7,3 +7,6 @@
   %h6
     Room #: #{reservation.room.room_num}
   =link_to 'More details on the reservation','/reservation_summary/'+reservation.reservation.id.to_s
+  -if(is_admin?)
+    =link_to 'edit reservation', edit_admin_room_reservation_path(reservation), class: "mx-2"
+    =link_to 'delete reservation','#', class: "mx-2"

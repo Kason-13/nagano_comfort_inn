@@ -1,0 +1,21 @@
+=provide(:title, 'Edit reservation')
+.center-form
+  %h5.listing-header
+    Edit reservation ##{@reservation.reservation.id}
+  %h6
+    Name of client: #{@reservation.reservation.client.name}
+  %h6
+    Client's email: #{@reservation.reservation.client.email}
+  %h6
+    Room ##{@reservation.room.room_num}
+  %h6
+    Reservated dates: check in #{@reservation.from_date.date} | checkout #{@reservation.to_date.date}
+  =form_for([:admin,@reservation]) do |f|
+    .center-form.lg-width.text-left
+      .spaceout-bottom
+        =render 'shared/error_messages', object: f.object
+      -# .spaceout-bottom
+      -#   =render 'reservation_dates/datepickers'
+      .spaceout-bottom
+        Total: #{f.text_field :price}
+    =f.submit "Modify reservation" , class:"btn btn-small btn-primary"

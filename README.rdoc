@@ -1,2 +1,2 @@
 mini projet de ruby on rails.
-les dates de commits ne sont pas bien synchronisé à cause de la date du VM.
+
